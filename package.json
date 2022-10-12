@@ -9,6 +9,9 @@
   "main": "dist/index.js",
   "name": "hex-architecture-poc",
   "packageManager": "pnpm@7.11.0",
-  "scripts": {},
+  "scripts": {
+    "build:clean": "rimraf dist",
+    "build": "tsc"
+  },
   "version": "0.1.0"
 }
