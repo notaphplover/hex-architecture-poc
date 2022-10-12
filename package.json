@@ -1,6 +1,10 @@
 {
   "author": "Roberto Pintos López",
   "description": "Hexagonal architecture PoC",
+  "devDependencies": {
+    "rimraf": "3.0.2",
+    "typescript": "4.8.3"
+  },
   "license": "See license in \"LICENSE\" file",
   "main": "dist/index.js",
   "name": "hex-architecture-poc",
