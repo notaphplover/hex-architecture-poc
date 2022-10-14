@@ -150,6 +150,12 @@ module.exports = {
       },
     ],
   },
+  settings: {
+    'import/resolver': {
+      node: true,
+      typescript: true,
+    },
+  },
   overrides: [
     {
       files: ['**/*.spec.ts'],
