@@ -1,7 +1,14 @@
 {
   "author": "Roberto Pintos López",
+  "dependencies": {
+    "@nestjs/common": "^9.1.4",
+    "@nestjs/core": "^9.1.4",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.5.7"
+  },
   "description": "Hexagonal architecture PoC",
   "devDependencies": {
+    "@azure/functions": "^3.2.0",
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
     "@commitlint/prompt-cli": "17.1.2",
