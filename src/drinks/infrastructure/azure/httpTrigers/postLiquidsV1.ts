@@ -1,28 +1,32 @@
-import { Context, HttpRequest } from '@azure/functions';
+import { Context, HttpRequest, HttpResponse } from '@azure/functions';
 import { INestApplicationContext } from '@nestjs/common';
 
-import { Handler } from '../../../../common/application/modules/Handler';
+import { Controller } from '../../../../common/infrastructure/modules/Controller';
 import { nestJsApplicationContextPromise } from '../../../../ioc/infrastructure/nestJs/nestApplicationContextPromise';
-import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
-import { Liquid } from '../../../domain/models/Liquid';
+import { LiquidApiV1 } from '../../api/v1/models/LiquidApiV1';
 
-export async function run(context: Context): Promise<Record<string, unknown>> {
+async function run(context: Context): Promise<HttpResponse> {
   const nestJsApplicationContext: INestApplicationContext =
     await nestJsApplicationContextPromise;
 
   const request: HttpRequest = context.req as HttpRequest;
 
-  const body = request.body;
+  const azurePostLiquidApiV1HttpRequestController: Controller<
+    HttpRequest,
+    LiquidApiV1
+  > = nestJsApplicationContext.get(
+    drinksInjectionSymbolsMap.postLiquidApiV1HttpRequestController,
+  );
 
-  const insertOneLiquidHandler: Handler<LiquidInsertQuery, Liquid> =
-    nestJsApplicationContext.get(
-      drinksInjectionSymbolsMap.insertOneLiquidHandler,
-    );
+  const liquidApiV1: LiquidApiV1 =
+    await azurePostLiquidApiV1HttpRequestController.handle(request);
 
   return {
-    body: 'hi!',
+    body: liquidApiV1,
+    headers: { 'Content-Type': 'application/json' },
+    status: 200,
   };
 }
 
-function parseBody(body: unknown) {}
+export default run;

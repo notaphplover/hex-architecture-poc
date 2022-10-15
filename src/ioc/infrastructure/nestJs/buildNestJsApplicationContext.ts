@@ -5,7 +5,6 @@ import { DrinksContainerModule } from '../../../drinks/infrastructure/nestJs/inj
 
 @Module({
   imports: [DrinksContainerModule],
-  providers: [],
 })
 class ContainerModule {}
 

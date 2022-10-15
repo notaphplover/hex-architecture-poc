@@ -16,4 +16,10 @@ export const drinksInjectionSymbolsMap = {
   ),
   liquidMemoryPersistenceService: Symbol.for('LiquidMemoryPersistenceService'),
   liquidToLiquidApiV1Converter: Symbol.for('LiquidToLiquidApiV1Converter'),
+  postLiquidApiV1HttpRequestController: Symbol.for(
+    'PostLiquidApiV1HttpRequestController',
+  ),
+  postLiquidApiV1HttpRequestProcessor: Symbol.for(
+    'PostLiquidApiV1HttpRequestProcessor',
+  ),
 };

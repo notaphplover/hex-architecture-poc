@@ -2,12 +2,13 @@
   "bindings": [
     {
       "authLevel": "anonymous",
-      "type": "httpTrigger",
       "direction": "in",
-      "name": "req",
       "methods": [
         "post"
-      ]
+      ],
+      "name": "req",
+      "route": "v1/liquids",
+      "type": "httpTrigger"
     },
     {
       "type": "http",

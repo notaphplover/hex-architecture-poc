@@ -15,7 +15,7 @@ export abstract class BaseEntityMemoryPersistenceService<
   TEntity extends BaseEntity<TKey>,
   TKey extends MapKey,
 > {
-  #entitiesMap: Map<TKey, TEntity>;
+  readonly #entitiesMap: Map<TKey, TEntity>;
 
   constructor() {
     this.#entitiesMap = new Map();

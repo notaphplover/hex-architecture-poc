@@ -11,7 +11,10 @@ import { LiquidKindApiV1 } from '../models/LiquidKindApiV1';
 export class LiquidToLiquidApiV1Converter
   implements Converter<Liquid, LiquidApiV1>
 {
-  #liquidKindToLiquidKindApiV1Converter: Converter<LiquidKind, LiquidKindApiV1>;
+  readonly #liquidKindToLiquidKindApiV1Converter: Converter<
+    LiquidKind,
+    LiquidKindApiV1
+  >;
 
   constructor(
     @Inject(drinksInjectionSymbolsMap.liquidKindToLiquidKindApiV1Converter)

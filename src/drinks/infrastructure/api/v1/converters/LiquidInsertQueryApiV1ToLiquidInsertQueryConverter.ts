@@ -11,7 +11,10 @@ import { LiquidInsertQueryApiV1 } from '../queries/LiquidInsertQueryApiV1';
 export class LiquidInsertQueryApiV1ToLiquidInsertQueryConverter
   implements Converter<LiquidInsertQueryApiV1, LiquidInsertQuery>
 {
-  #liquidKindApiV1ToLiquidKindConverter: Converter<LiquidKindApiV1, LiquidKind>;
+  readonly #liquidKindApiV1ToLiquidKindConverter: Converter<
+    LiquidKindApiV1,
+    LiquidKind
+  >;
 
   constructor(
     @Inject(drinksInjectionSymbolsMap.liquidKindApiV1ToLiquidKindConverter)

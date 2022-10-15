@@ -10,7 +10,7 @@ import { LiquidInsertQuery } from '../queries/LiquidInsertQuery';
 export class InsertOneLiquidHandler
   implements Handler<LiquidInsertQuery, Liquid>
 {
-  #insertOneLiquidPort: InsertOneEntityPort<LiquidInsertQuery, Liquid>;
+  readonly #insertOneLiquidPort: InsertOneEntityPort<LiquidInsertQuery, Liquid>;
 
   constructor(
     @Inject(drinksInjectionSymbolsMap.insertOneLiquidAdapter)

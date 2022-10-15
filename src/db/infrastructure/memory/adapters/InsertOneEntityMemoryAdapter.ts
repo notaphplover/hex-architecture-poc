@@ -7,11 +7,11 @@ import { UuidBasedEntityMemoryPersistenceService } from '../service/UuidBasedEnt
 export class InsertOneEntityMemoryAdapter<TQuery, TEntity extends BaseEntity>
   implements InsertOneEntityPort<TQuery, TEntity>
 {
-  #insertQueryToMemoryInsertQueryConverter: Converter<
+  readonly #insertQueryToMemoryInsertQueryConverter: Converter<
     TQuery,
     InsertQuery<TEntity>
   >;
-  #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntity>;
+  readonly #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntity>;
 
   constructor(
     insertQueryToMemoryInsertQueryConverter: Converter<
