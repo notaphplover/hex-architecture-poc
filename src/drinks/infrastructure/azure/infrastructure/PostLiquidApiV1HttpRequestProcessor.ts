@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
+import { AppError } from '../../../../errors/application/models/AppError';
+import { AppErrorKind } from '../../../../errors/application/models/AppErrorKind';
 import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
 import { RequestProcessor } from '../../../../http/application/modules/RequestProcessor';
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
@@ -41,7 +43,7 @@ export class PostLiquidApiV1HttpRequestProcessor
         liquidInsertQueryApiV1,
       );
     } else {
-      throw new Error('Invalid body');
+      throw new AppError(AppErrorKind.contractViolation, 'Invalid body');
     }
   }
 

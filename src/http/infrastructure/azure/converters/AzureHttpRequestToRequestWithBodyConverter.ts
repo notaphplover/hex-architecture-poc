@@ -1,6 +1,8 @@
 import { HttpRequest } from '@azure/functions';
 import { Injectable } from '@nestjs/common';
 
+import { AppError } from '../../../../errors/application/models/AppError';
+import { AppErrorKind } from '../../../../errors/application/models/AppErrorKind';
 import { RequestWithBody } from '../../../application/models/RequestWithBody';
 import { BaseAzureHttpRequestToRequestConverter } from './BaseAzureHttpRequestToRequestConverter';
 
@@ -25,7 +27,10 @@ export class AzureHttpRequestToRequestWithBodyConverter extends BaseAzureHttpReq
     ) {
       return httpRequest.body;
     } else {
-      throw new Error('Expecting a JSON body');
+      throw new AppError(
+        AppErrorKind.contractViolation,
+        'Expecting a JSON body',
+      );
     }
   }
 

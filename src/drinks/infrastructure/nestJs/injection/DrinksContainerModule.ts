@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { UuidBasedEntityMemoryPersistenceService } from '../../../../db/infrastructure/memory/service/UuidBasedEntityMemoryPersistenceService';
+import { ErrorsContainerModule } from '../../../../errors/infrastructure/nestJs/ErrorsContainerModule';
 import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/HttpContainerModule';
 import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
@@ -9,14 +10,14 @@ import { LiquidInsertQueryApiV1ToLiquidInsertQueryConverter } from '../../api/v1
 import { LiquidKindApiV1ToLiquidKindConverter } from '../../api/v1/converters/LiquidKindApiV1ToLiquidKindConverter';
 import { LiquidKindToLiquidKindApiV1Converter } from '../../api/v1/converters/LiquidKindToLiquidKindApiV1Converter';
 import { LiquidToLiquidApiV1Converter } from '../../api/v1/converters/LiquidToLiquidApiV1Converter';
+import { AzurePostLiquidApiV1HttpRequestController } from '../../azure/infrastructure/AzurePostLiquidApiV1HttpRequestController';
 import { PostLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/PostLiquidApiV1HttpRequestProcessor';
-import { AzurePostLiquidApiV1HttpRequestController } from '../../azure/infrastructure/PostLiquidApiV1RequestController';
 import { InsertOneLiquidAdapter } from '../../db/adapter/InsertOneLiquidAdapter';
 import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/converter/LiquidInsertQueryToLiquidMemoryInsertQueryConverter';
 
 @Module({
   exports: [drinksInjectionSymbolsMap.postLiquidApiV1HttpRequestController],
-  imports: [HttpContainerModule],
+  imports: [ErrorsContainerModule, HttpContainerModule],
   providers: [
     {
       provide: drinksInjectionSymbolsMap.insertOneLiquidHandler,
