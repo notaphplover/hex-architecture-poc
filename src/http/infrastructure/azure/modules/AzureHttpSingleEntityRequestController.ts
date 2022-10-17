@@ -7,14 +7,9 @@ import { Controller } from '../../../../common/infrastructure/modules/Controller
 import { Request } from '../../../application/models/Request';
 import { RequestWithBody } from '../../../application/models/RequestWithBody';
 import { RequestProcessor } from '../../../application/modules/RequestProcessor';
+import { HttpSingleEntityResponseCreateQuery } from '../../../application/query/HttpSingleEntityResponseCreateQuery';
 
-export interface HttpResponseCreateQuery<TParams, TModel, TModelApi> {
-  readonly handlerParams: TParams;
-  readonly model: TModel;
-  readonly modelApi: TModelApi;
-}
-
-export class AzureHttpRequestController<
+export class AzureHttpSingleEntityRequestController<
   TRequest extends Request | RequestWithBody,
   TParams,
   TModel,
@@ -27,10 +22,10 @@ export class AzureHttpRequestController<
     TRequest
   >;
   readonly #requestProcessor: RequestProcessor<TRequest, TParams>;
-  readonly #applicationHandler: Handler<TParams, TModel>;
+  readonly #applicationHandler: Handler<TParams, TModel | undefined>;
   readonly #modelToModelApiConverter: Converter<TModel, TModelApi>;
   readonly #httpResponseCreateQueryToResponseConverter: Converter<
-    HttpResponseCreateQuery<TParams, TModel, TModelApi>,
+    HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
     HttpResponse
   >;
 
@@ -38,10 +33,10 @@ export class AzureHttpRequestController<
     handleErrorPort: Port<unknown, HttpResponse>,
     azureHttpRequestToRequestConverter: Converter<HttpRequest, TRequest>,
     requestProcessor: RequestProcessor<TRequest, TParams>,
-    applicationHandler: Handler<TParams, TModel>,
+    applicationHandler: Handler<TParams, TModel | undefined>,
     modelToModelApiConverter: Converter<TModel, TModelApi>,
     httpResponseGenerationParamsToResponseConverter: Converter<
-      HttpResponseCreateQuery<TParams, TModel, TModelApi>,
+      HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
       HttpResponse
     >,
   ) {
@@ -60,15 +55,36 @@ export class AzureHttpRequestController<
       const request: TRequest =
         this.#azureHttpRequestToRequestConverter.convert(httpRequest);
       const params: TParams = await this.#requestProcessor.process(request);
-      const model: TModel = await this.#applicationHandler.handle(params);
-      const modelApi: TModelApi = this.#modelToModelApiConverter.convert(model);
+      const modelOrUndefined: TModel | undefined =
+        await this.#applicationHandler.handle(params);
+
+      let httpResponseCreateQuery: HttpSingleEntityResponseCreateQuery<
+        TParams,
+        TModel,
+        TModelApi
+      >;
+
+      if (modelOrUndefined === undefined) {
+        httpResponseCreateQuery = {
+          handlerParams: params,
+          model: modelOrUndefined,
+          modelApi: undefined,
+        };
+      } else {
+        const modelApi: TModelApi =
+          this.#modelToModelApiConverter.convert(modelOrUndefined);
+
+        httpResponseCreateQuery = {
+          handlerParams: params,
+          model: modelOrUndefined,
+          modelApi: modelApi,
+        };
+      }
 
       const httpResponse: HttpResponse =
-        this.#httpResponseCreateQueryToResponseConverter.convert({
-          handlerParams: params,
-          model,
-          modelApi: modelApi,
-        });
+        this.#httpResponseCreateQueryToResponseConverter.convert(
+          httpResponseCreateQuery,
+        );
 
       return httpResponse;
     } catch (error: unknown) {

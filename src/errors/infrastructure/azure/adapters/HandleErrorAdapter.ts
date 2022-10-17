@@ -1,4 +1,4 @@
-import { HttpResponse } from '@azure/functions';
+import { HttpResponse, HttpResponseHeaders } from '@azure/functions';
 import { Injectable } from '@nestjs/common';
 import httpStatus from 'http-status';
 
@@ -59,7 +59,7 @@ export class HandleErrorAdapter implements Port<unknown, HttpResponse> {
       body: {
         error: errorMessage,
       },
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.#getHttpResponseHeaders(),
       status: statusCode,
     };
   }
@@ -69,9 +69,13 @@ export class HandleErrorAdapter implements Port<unknown, HttpResponse> {
       body: {
         error: 'Unexpected error occurred while processing the request.',
       },
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.#getHttpResponseHeaders(),
       status: 500,
     };
+  }
+
+  #getHttpResponseHeaders(): HttpResponseHeaders {
+    return { 'Content-Type': 'application/json' };
   }
 
   #stringifyError(error: Error): string {

@@ -5,20 +5,20 @@ import { Handler } from '../../../../common/application/modules/Handler';
 import { Port } from '../../../../common/application/modules/Port';
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { errorInjectionSymbolsMap } from '../../../../errors/domain/errorInjectionSymbolsMap';
-import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
+import { Request } from '../../../../http/application/models/Request';
 import { RequestProcessor } from '../../../../http/application/modules/RequestProcessor';
 import { HttpSingleEntityResponseCreateQuery } from '../../../../http/application/query/HttpSingleEntityResponseCreateQuery';
 import { httpInjectionSymbolsMap } from '../../../../http/domain/httpInjectionSymbolsMap';
 import { AzureHttpSingleEntityRequestController } from '../../../../http/infrastructure/azure/modules/AzureHttpSingleEntityRequestController';
-import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
+import { LiquidFindQuery } from '../../../application/queries/LiquidFindQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { Liquid } from '../../../domain/models/Liquid';
 import { LiquidApiV1 } from '../../api/v1/models/LiquidApiV1';
 
 @Injectable()
-export class AzurePostLiquidApiV1HttpRequestController extends AzureHttpSingleEntityRequestController<
-  RequestWithBody,
-  LiquidInsertQuery,
+export class AzureGetLiquidApiV1HttpRequestController extends AzureHttpSingleEntityRequestController<
+  Request,
+  LiquidFindQuery,
   Liquid,
   LiquidApiV1
 > {
@@ -26,36 +26,36 @@ export class AzurePostLiquidApiV1HttpRequestController extends AzureHttpSingleEn
   constructor(
     @Inject(errorInjectionSymbolsMap.handleErrorPort)
     handleErrorPort: Port<unknown, HttpResponse>,
-    @Inject(httpInjectionSymbolsMap.azureHttpRequestToRequestWithBodyConverter)
-    azurePostLiquidApiV1HttpRequestToRequestConverter: Converter<
+    @Inject(httpInjectionSymbolsMap.azureHttpRequestToRequestConverter)
+    azureGetLiquidApiV1HttpRequestToRequestConverter: Converter<
       HttpRequest,
-      RequestWithBody
+      Request
     >,
-    @Inject(drinksInjectionSymbolsMap.postLiquidApiV1HttpRequestProcessor)
-    postLiquidApiV1HttpRequestProcessor: RequestProcessor<
-      RequestWithBody,
-      LiquidInsertQuery
+    @Inject(drinksInjectionSymbolsMap.getLiquidApiV1HttpRequestProcessor)
+    getLiquidApiV1HttpRequestProcessor: RequestProcessor<
+      Request,
+      LiquidFindQuery
     >,
-    @Inject(drinksInjectionSymbolsMap.insertOneLiquidHandler)
-    insertOneLiquidHandler: Handler<LiquidInsertQuery, Liquid>,
+    @Inject(drinksInjectionSymbolsMap.findOneLiquidHandler)
+    insertOneLiquidHandler: Handler<LiquidFindQuery, Liquid>,
     @Inject(drinksInjectionSymbolsMap.liquidToLiquidApiV1Converter)
     liquidToLiquidApiV1Converter: Converter<Liquid, LiquidApiV1>,
     @Inject(
-      httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
+      httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
     )
     httpResponseCreateQueryToResponseConverter: Converter<
       HttpSingleEntityResponseCreateQuery<
-        LiquidInsertQuery,
+        LiquidFindQuery,
         Liquid,
-        LiquidApiV1
+        LiquidApiV1 | undefined
       >,
       HttpResponse
     >,
   ) {
     super(
       handleErrorPort,
-      azurePostLiquidApiV1HttpRequestToRequestConverter,
-      postLiquidApiV1HttpRequestProcessor,
+      azureGetLiquidApiV1HttpRequestToRequestConverter,
+      getLiquidApiV1HttpRequestProcessor,
       insertOneLiquidHandler,
       liquidToLiquidApiV1Converter,
       httpResponseCreateQueryToResponseConverter,

@@ -1,7 +1,21 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const drinksInjectionSymbolsMap = {
+  findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
+  findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
+  getLiquidApiV1HttpRequestController: Symbol.for(
+    'GetLiquidApiV1HttpRequestController',
+  ),
+  getLiquidApiV1HttpRequestProcessor: Symbol.for(
+    'GetLiquidApiV1HttpRequestProcessor',
+  ),
   insertOneLiquidAdapter: Symbol.for('InsertOneLiquidAdapter'),
   insertOneLiquidHandler: Symbol.for('InsertOneLiquidHandler'),
+  liquidFindQueryApiV1ToLiquidFindQueryConverter: Symbol.for(
+    'LiquidFindQueryApiV1ToLiquidFindQueryConverter',
+  ),
+  liquidFindQueryToLiquidMemoryFindQueryConverter: Symbol.for(
+    'LiquidFindQueryToLiquidMemoryFindQueryConverter',
+  ),
   liquidInsertQueryApiV1ToLiquidInsertQueryConverter: Symbol.for(
     'LiquidInsertQueryApiV1ToLiquidInsertQueryConverter',
   ),

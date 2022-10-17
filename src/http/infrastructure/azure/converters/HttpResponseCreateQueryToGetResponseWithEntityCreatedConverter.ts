@@ -6,7 +6,7 @@ import { Converter } from '../../../../common/domain/modules/Converter';
 import { HttpSingleEntityResponseCreateQuery } from '../../../application/query/HttpSingleEntityResponseCreateQuery';
 
 @Injectable()
-export class HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter
+export class HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter
   implements
     Converter<
       HttpSingleEntityResponseCreateQuery<unknown, unknown, unknown>,
@@ -25,7 +25,7 @@ export class HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter
     if (httpResponseCreateQuery.modelApi === undefined) {
       httpResponse = {
         headers: this.#getHttpResponseHeaders(),
-        status: httpStatus.CREATED,
+        status: httpStatus.NOT_FOUND,
       };
     } else {
       httpResponse = {
