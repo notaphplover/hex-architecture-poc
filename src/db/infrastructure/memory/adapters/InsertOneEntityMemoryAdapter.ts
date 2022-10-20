@@ -1,5 +1,6 @@
 import { Entity } from '../../../../common/domain/models/Entity';
 import { Converter } from '../../../../common/domain/modules/Converter';
+import { ConverterAsync } from '../../../../common/domain/modules/ConverterAsync';
 import { InsertOneEntityPort } from '../../../application/ports/InsertOneEntityPort';
 import { EntityDb } from '../models/EntityDb';
 import { InsertQuery } from '../service/BaseEntityMemoryPersistenceService';
@@ -11,7 +12,9 @@ export class InsertOneEntityMemoryAdapter<
   TEntityDb extends EntityDb<string>,
 > implements InsertOneEntityPort<TQuery, TEntity>
 {
-  readonly #entityDbToEntityConverter: Converter<TEntityDb, TEntity>;
+  readonly #entityDbToEntityConverter:
+    | Converter<TEntityDb, TEntity>
+    | ConverterAsync<TEntityDb, TEntity>;
   readonly #insertQueryToMemoryInsertQueryConverter: Converter<
     TQuery,
     InsertQuery<TEntityDb>
@@ -19,7 +22,9 @@ export class InsertOneEntityMemoryAdapter<
   readonly #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntityDb>;
 
   constructor(
-    entityDbToEntityConverter: Converter<TEntityDb, TEntity>,
+    entityDbToEntityConverter:
+      | Converter<TEntityDb, TEntity>
+      | ConverterAsync<TEntityDb, TEntity>,
     insertQueryToMemoryInsertQueryConverter: Converter<
       TQuery,
       InsertQuery<TEntityDb>
@@ -40,7 +45,9 @@ export class InsertOneEntityMemoryAdapter<
     const entityDb: TEntityDb =
       this.#uuidBasedEntityMemoryPersistenceService.insert(memoryInsertQuery);
 
-    const entity: TEntity = this.#entityDbToEntityConverter.convert(entityDb);
+    const entity: TEntity = await this.#entityDbToEntityConverter.convert(
+      entityDb,
+    );
 
     return entity;
   }

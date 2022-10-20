@@ -1,5 +1,6 @@
 import { Entity } from '../../../../common/domain/models/Entity';
 import { Converter } from '../../../../common/domain/modules/Converter';
+import { ConverterAsync } from '../../../../common/domain/modules/ConverterAsync';
 import { FindOneEntityPort } from '../../../application/ports/FindOneEntityPort';
 import { EntityDb } from '../models/EntityDb';
 import { FindOneQuery } from '../service/BaseEntityMemoryPersistenceService';
@@ -11,7 +12,9 @@ export class FindOneEntityMemoryAdapter<
   TEntityDb extends EntityDb<string>,
 > implements FindOneEntityPort<TQuery, TEntity>
 {
-  readonly #entityDbToEntityConverter: Converter<TEntityDb, TEntity>;
+  readonly #entityDbToEntityConverter:
+    | Converter<TEntityDb, TEntity>
+    | ConverterAsync<TEntityDb, TEntity>;
   readonly #findQueryToMemoryFindOneQueryConverter: Converter<
     TQuery,
     FindOneQuery<TEntityDb>
@@ -19,7 +22,9 @@ export class FindOneEntityMemoryAdapter<
   readonly #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntityDb>;
 
   constructor(
-    entityDbToEntityConverter: Converter<TEntityDb, TEntity>,
+    entityDbToEntityConverter:
+      | Converter<TEntityDb, TEntity>
+      | ConverterAsync<TEntityDb, TEntity>,
     findQueryToMemoryFindOneQueryConverter: Converter<
       TQuery,
       FindOneQuery<TEntityDb>
@@ -45,8 +50,9 @@ export class FindOneEntityMemoryAdapter<
     if (entityDbOrUndefined === undefined) {
       entityOrUndefined = undefined;
     } else {
-      entityOrUndefined =
-        this.#entityDbToEntityConverter.convert(entityDbOrUndefined);
+      entityOrUndefined = await this.#entityDbToEntityConverter.convert(
+        entityDbOrUndefined,
+      );
     }
 
     return entityOrUndefined;

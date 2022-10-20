@@ -5,6 +5,10 @@ export type InsertQuery<TEntity extends EntityDb = EntityDb> =
   | TEntity
   | Omit<TEntity, 'id'>;
 
+export type SingleFilter<TEntity> = {
+  [P in keyof TEntity]?: ValueFilter<TEntity[P]>;
+};
+
 export interface FindQuery<TEntity extends EntityDb = EntityDb> {
   filters: Partial<TEntity>;
   paginationOptions?: FindQueryPaginationOptions;
@@ -13,6 +17,27 @@ export interface FindQuery<TEntity extends EntityDb = EntityDb> {
 export interface FindOneQuery<TEntity extends EntityDb = EntityDb> {
   filters: Partial<TEntity>;
 }
+
+export interface IntersectionFilter<TValue> {
+  kind: MultipleFilterKind.intersection;
+  filters: ValueFilter<TValue>[];
+}
+
+export enum MultipleFilterKind {
+  intersection = 'intersection',
+  union = 'union',
+}
+
+export type MultipleValueFilter<TValue> =
+  | IntersectionFilter<TValue>
+  | UnionFilter<TValue>;
+
+export interface UnionFilter<TValue> {
+  kind: MultipleFilterKind.union;
+  filters: ValueFilter<TValue>[];
+}
+
+export type ValueFilter<TValue> = TValue | MultipleValueFilter<TValue>;
 
 export interface FindQueryPaginationOptions {
   limit: number;
