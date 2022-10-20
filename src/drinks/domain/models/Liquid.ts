@@ -1,4 +1,4 @@
-import { Entity } from '../../../common/models/Entity';
+import { Entity } from '../../../common/domain/models/Entity';
 import { LiquidKind } from './LiquidKind';
 
 export interface Liquid extends Entity<string> {

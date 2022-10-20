@@ -1,17 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { InsertQuery } from '../../../../db/infrastructure/memory/service/BaseEntityMemoryPersistenceService';
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
-import { Liquid } from '../../../domain/models/Liquid';
+import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
+import { LiquidKind } from '../../../domain/models/LiquidKind';
+import { LiquidDb } from '../models/LiquidDb';
+import { LiquidKindDb } from '../models/LiquidKindDb';
 
 @Injectable()
 export class LiquidInsertQueryToLiquidMemoryInsertQueryConverter
-  implements Converter<LiquidInsertQuery, InsertQuery<Liquid>>
+  implements Converter<LiquidInsertQuery, InsertQuery<LiquidDb>>
 {
-  public convert(input: LiquidInsertQuery): InsertQuery<Liquid> {
+  readonly #liquidKindToLiquidKindDbConverter: Converter<
+    LiquidKind,
+    LiquidKindDb
+  >;
+
+  constructor(
+    @Inject(drinksInjectionSymbolsMap.liquidKindToLiquidKindDbConverter)
+    liquidKindToLiquidKindDbConverter: Converter<LiquidKind, LiquidKindDb>,
+  ) {
+    this.#liquidKindToLiquidKindDbConverter = liquidKindToLiquidKindDbConverter;
+  }
+
+  public convert(input: LiquidInsertQuery): InsertQuery<LiquidDb> {
     return {
-      kind: input.kind,
+      kind: this.#liquidKindToLiquidKindDbConverter.convert(input.kind),
       name: input.name,
     };
   }

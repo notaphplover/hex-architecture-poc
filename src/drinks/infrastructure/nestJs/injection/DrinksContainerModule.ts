@@ -6,7 +6,7 @@ import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/Http
 import { FindOneLiquidHandler } from '../../../application/handlers/FindOneLiquidHandler';
 import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
-import { Liquid } from '../../../domain/models/Liquid';
+import { Drink } from '../../../domain/models/Drink';
 import { LiquidFindQueryApiV1ToLiquidFindQueryConverter } from '../../api/v1/converters/LiquidFindQueryApiV1ToLiquidFindQueryConverter';
 import { LiquidInsertQueryApiV1ToLiquidInsertQueryConverter } from '../../api/v1/converters/LiquidInsertQueryApiV1ToLiquidInsertQueryConverter';
 import { LiquidKindApiV1ToLiquidKindConverter } from '../../api/v1/converters/LiquidKindApiV1ToLiquidKindConverter';
@@ -18,8 +18,12 @@ import { GetLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/G
 import { PostLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/PostLiquidApiV1HttpRequestProcessor';
 import { FindOneLiquidAdapter } from '../../db/adapter/FindOneLiquidAdapter';
 import { InsertOneLiquidAdapter } from '../../db/adapter/InsertOneLiquidAdapter';
-import { LiquidFindQueryToLiquidMemoryFindQueryConverter } from '../../db/converter/LiquidFindQueryToLiquidMemoryFindQueryConverter';
+import { LiquidDbToLiquidConverter } from '../../db/converter/LiquidDbToLiquidConverter';
+import { LiquidFindQueryToLiquidMemoryFindOneQueryConverter } from '../../db/converter/LiquidFindQueryToLiquidMemoryFindOneQueryConverter';
 import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/converter/LiquidInsertQueryToLiquidMemoryInsertQueryConverter';
+import { LiquidKindDbToLiquidKindConverter } from '../../db/converter/LiquidKindDbToLiquidKindConverter';
+import { LiquidKindToLiquidKindDbConverter } from '../../db/converter/LiquidKindToLiquidKindDbConverter';
+import { LiquidDb } from '../../db/models/LiquidDb';
 
 @Module({
   exports: [
@@ -28,6 +32,10 @@ import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/co
   ],
   imports: [ErrorsContainerModule, HttpContainerModule],
   providers: [
+    {
+      provide: drinksInjectionSymbolsMap.drinkMemoryPersistenceService,
+      useValue: new UuidBasedEntityMemoryPersistenceService<Drink>(),
+    },
     {
       provide: drinksInjectionSymbolsMap.findOneLiquidAdapter,
       useClass: FindOneLiquidAdapter,
@@ -53,14 +61,18 @@ import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/co
       useClass: InsertOneLiquidAdapter,
     },
     {
+      provide: drinksInjectionSymbolsMap.liquidDbToLiquidConverter,
+      useClass: LiquidDbToLiquidConverter,
+    },
+    {
       provide:
         drinksInjectionSymbolsMap.liquidFindQueryApiV1ToLiquidFindQueryConverter,
       useClass: LiquidFindQueryApiV1ToLiquidFindQueryConverter,
     },
     {
       provide:
-        drinksInjectionSymbolsMap.liquidFindQueryToLiquidMemoryFindQueryConverter,
-      useClass: LiquidFindQueryToLiquidMemoryFindQueryConverter,
+        drinksInjectionSymbolsMap.liquidFindQueryToLiquidMemoryFindOneQueryConverter,
+      useClass: LiquidFindQueryToLiquidMemoryFindOneQueryConverter,
     },
     {
       provide:
@@ -77,12 +89,20 @@ import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/co
       useClass: LiquidKindApiV1ToLiquidKindConverter,
     },
     {
+      provide: drinksInjectionSymbolsMap.liquidKindDbToLiquidKindConverter,
+      useClass: LiquidKindDbToLiquidKindConverter,
+    },
+    {
       provide: drinksInjectionSymbolsMap.liquidKindToLiquidKindApiV1Converter,
       useClass: LiquidKindToLiquidKindApiV1Converter,
     },
     {
+      provide: drinksInjectionSymbolsMap.liquidKindToLiquidKindDbConverter,
+      useClass: LiquidKindToLiquidKindDbConverter,
+    },
+    {
       provide: drinksInjectionSymbolsMap.liquidMemoryPersistenceService,
-      useValue: new UuidBasedEntityMemoryPersistenceService<Liquid>(),
+      useValue: new UuidBasedEntityMemoryPersistenceService<LiquidDb>(),
     },
     {
       provide: drinksInjectionSymbolsMap.liquidToLiquidApiV1Converter,

@@ -1,4 +1,4 @@
-import { Entity } from '../../../common/models/Entity';
+import { Entity } from '../../../common/domain/models/Entity';
 import { DrinkItem } from './DrinkItem';
 
 export interface Drink extends Entity<string> {

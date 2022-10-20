@@ -1,12 +1,10 @@
 import { randomUUID } from 'crypto';
 
-import {
-  BaseEntity,
-  BaseEntityMemoryPersistenceService,
-} from './BaseEntityMemoryPersistenceService';
+import { EntityDb } from '../models/EntityDb';
+import { BaseEntityMemoryPersistenceService } from './BaseEntityMemoryPersistenceService';
 
 export class UuidBasedEntityMemoryPersistenceService<
-  TEntity extends BaseEntity<string>,
+  TEntity extends EntityDb<string>,
 > extends BaseEntityMemoryPersistenceService<TEntity, string> {
   protected generateId(): string {
     return randomUUID();

@@ -1,19 +1,29 @@
-export type MapKey = number | string;
+import { EntityDb } from '../models/EntityDb';
+import { MapKey } from '../models/MapKey';
 
-export interface BaseEntity<TKey extends MapKey = MapKey> {
-  id: TKey;
-}
-
-export type InsertQuery<TEntity extends BaseEntity = BaseEntity> =
+export type InsertQuery<TEntity extends EntityDb = EntityDb> =
   | TEntity
   | Omit<TEntity, 'id'>;
 
-export type UpdateQuery<TEntity extends BaseEntity = BaseEntity> =
-  Partial<TEntity>;
+export interface FindQuery<TEntity extends EntityDb = EntityDb> {
+  filters: Partial<TEntity>;
+  paginationOptions?: FindQueryPaginationOptions;
+}
+
+export interface FindOneQuery<TEntity extends EntityDb = EntityDb> {
+  filters: Partial<TEntity>;
+}
+
+export interface FindQueryPaginationOptions {
+  limit: number;
+  offset: number;
+}
+
+export type UpdateQuery<TEntity extends EntityDb = EntityDb> = Partial<TEntity>;
 
 export abstract class BaseEntityMemoryPersistenceService<
-  TEntity extends BaseEntity<TKey>,
-  TKey extends MapKey,
+  TEntity extends EntityDb<TKey>,
+  TKey extends MapKey = MapKey,
 > {
   readonly #entitiesMap: Map<TKey, TEntity>;
 
@@ -33,12 +43,18 @@ export abstract class BaseEntityMemoryPersistenceService<
     return entity;
   }
 
-  public find(id: TKey): TEntity | undefined {
-    return this.#findById(id);
+  public find(findQuery: FindQuery<TEntity>): TEntity[] {
+    const filteredEntities: TEntity[] = this.#findByFilters(findQuery.filters);
+
+    return this.#extractPage(filteredEntities, findQuery.paginationOptions);
+  }
+
+  public findOne(findOneQuery: FindOneQuery<TEntity>): TEntity | undefined {
+    return this.#findByFilters(findOneQuery.filters)[0];
   }
 
   public update(id: TKey, query: UpdateQuery<TEntity>): void {
-    const entityToUpdate: TEntity | undefined = this.#findById(id);
+    const entityToUpdate: TEntity | undefined = this.#findById(id)[0];
 
     if (entityToUpdate !== undefined) {
       const updatedEntity: TEntity = {
@@ -50,8 +66,61 @@ export abstract class BaseEntityMemoryPersistenceService<
     }
   }
 
-  #findById(id: TKey): TEntity | undefined {
-    return this.#entitiesMap.get(id);
+  #filterEntity(entity: TEntity, filter: Partial<TEntity>) {
+    for (const key in filter) {
+      if (Object.prototype.hasOwnProperty.call(filter, key)) {
+        if (entity[key] !== filter[key]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  #getEntitiesToFilter(filters: Partial<TEntity>): TEntity[] {
+    let entitiesToFilter: TEntity[];
+
+    if (filters.id === undefined) {
+      entitiesToFilter = [...this.#entitiesMap.values()];
+    } else {
+      entitiesToFilter = this.#findById(filters.id);
+    }
+
+    return entitiesToFilter;
+  }
+
+  #extractPage(
+    entities: TEntity[],
+    paginationOptions?: FindQueryPaginationOptions,
+  ): TEntity[] {
+    const startIndex: number = paginationOptions?.offset ?? 0;
+    const endIndex: number | undefined =
+      paginationOptions?.offset === undefined
+        ? undefined
+        : startIndex + paginationOptions.offset;
+
+    return entities.slice(startIndex, endIndex);
+  }
+
+  #findById(id: TKey): [TEntity] | [] {
+    const entity: TEntity | undefined = this.#entitiesMap.get(id);
+
+    let entities: [TEntity] | [];
+
+    if (entity === undefined) {
+      entities = [];
+    } else {
+      entities = [entity];
+    }
+
+    return entities;
+  }
+
+  #findByFilters(filters: Partial<TEntity>): TEntity[] {
+    return this.#getEntitiesToFilter(filters).filter(
+      (entity: TEntity): boolean => this.#filterEntity(entity, filters),
+    );
   }
 
   #insertQueryToEntity(query: InsertQuery<TEntity>): TEntity {

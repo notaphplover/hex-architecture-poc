@@ -1,31 +1,54 @@
+import { Entity } from '../../../../common/domain/models/Entity';
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { FindOneEntityPort } from '../../../application/ports/FindOneEntityPort';
-import { BaseEntity } from '../../../domain/models/BaseEntity';
+import { EntityDb } from '../models/EntityDb';
+import { FindOneQuery } from '../service/BaseEntityMemoryPersistenceService';
 import { UuidBasedEntityMemoryPersistenceService } from '../service/UuidBasedEntityMemoryPersistenceService';
 
-export class FindOneEntityMemoryAdapter<TQuery, TEntity extends BaseEntity>
-  implements FindOneEntityPort<TQuery, TEntity>
+export class FindOneEntityMemoryAdapter<
+  TQuery,
+  TEntity extends Entity<string>,
+  TEntityDb extends EntityDb<string>,
+> implements FindOneEntityPort<TQuery, TEntity>
 {
-  readonly #findQueryToMemoryFindQueryConverter: Converter<TQuery, string>;
-  readonly #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntity>;
+  readonly #entityDbToEntityConverter: Converter<TEntityDb, TEntity>;
+  readonly #findQueryToMemoryFindOneQueryConverter: Converter<
+    TQuery,
+    FindOneQuery<TEntityDb>
+  >;
+  readonly #uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntityDb>;
 
   constructor(
-    findQueryToMemoryFindQueryConverter: Converter<TQuery, string>,
-    uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntity>,
+    entityDbToEntityConverter: Converter<TEntityDb, TEntity>,
+    findQueryToMemoryFindOneQueryConverter: Converter<
+      TQuery,
+      FindOneQuery<TEntityDb>
+    >,
+    uuidBasedEntityMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<TEntityDb>,
   ) {
-    this.#findQueryToMemoryFindQueryConverter =
-      findQueryToMemoryFindQueryConverter;
+    this.#entityDbToEntityConverter = entityDbToEntityConverter;
+    this.#findQueryToMemoryFindOneQueryConverter =
+      findQueryToMemoryFindOneQueryConverter;
     this.#uuidBasedEntityMemoryPersistenceService =
       uuidBasedEntityMemoryPersistenceService;
   }
 
   public async adapt(query: TQuery): Promise<TEntity | undefined> {
-    const memoryFindQuery: string =
-      this.#findQueryToMemoryFindQueryConverter.convert(query);
+    const memoryFindOneQuery: FindOneQuery<TEntityDb> =
+      this.#findQueryToMemoryFindOneQueryConverter.convert(query);
 
-    const entity: TEntity | undefined =
-      this.#uuidBasedEntityMemoryPersistenceService.find(memoryFindQuery);
+    const entityDbOrUndefined: TEntityDb | undefined =
+      this.#uuidBasedEntityMemoryPersistenceService.findOne(memoryFindOneQuery);
 
-    return entity;
+    let entityOrUndefined: TEntity | undefined;
+
+    if (entityDbOrUndefined === undefined) {
+      entityOrUndefined = undefined;
+    } else {
+      entityOrUndefined =
+        this.#entityDbToEntityConverter.convert(entityDbOrUndefined);
+    }
+
+    return entityOrUndefined;
   }
 }

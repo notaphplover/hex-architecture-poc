@@ -6,10 +6,10 @@ import { LiquidKindApiV1 } from '../models/LiquidKindApiV1';
 
 const liquidKindToLiquidKindApiV1Map: {
   [TKey in LiquidKind]: LiquidKindApiV1;
-} = {
+} = Object.freeze({
   [LiquidKind.alcohol]: LiquidKindApiV1.alcohol,
   [LiquidKind.soda]: LiquidKindApiV1.soda,
-};
+});
 
 @Injectable()
 export class LiquidKindToLiquidKindApiV1Converter

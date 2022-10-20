@@ -7,25 +7,30 @@ import { UuidBasedEntityMemoryPersistenceService } from '../../../../db/infrastr
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { Liquid } from '../../../domain/models/Liquid';
+import { LiquidDb } from '../models/LiquidDb';
 
 @Injectable()
 export class InsertOneLiquidAdapter extends InsertOneEntityMemoryAdapter<
   LiquidInsertQuery,
-  Liquid
+  Liquid,
+  LiquidDb
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
+    @Inject(drinksInjectionSymbolsMap.liquidDbToLiquidConverter)
+    liquidDbToLiquidConverter: Converter<LiquidDb, Liquid>,
     @Inject(
       drinksInjectionSymbolsMap.liquidInsertQueryToLiquidMemoryInsertQueryConverter,
     )
     liquidInsertQueryToLiquidMemoryInsertQueryConverter: Converter<
       LiquidInsertQuery,
-      InsertQuery<Liquid>
+      InsertQuery<LiquidDb>
     >,
     @Inject(drinksInjectionSymbolsMap.liquidMemoryPersistenceService)
-    liquidMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<Liquid>,
+    liquidMemoryPersistenceService: UuidBasedEntityMemoryPersistenceService<LiquidDb>,
   ) {
     super(
+      liquidDbToLiquidConverter,
       liquidInsertQueryToLiquidMemoryInsertQueryConverter,
       liquidMemoryPersistenceService,
     );
