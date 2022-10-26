@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
-import { InsertQuery } from '../../../../db/infrastructure/memory/service/BaseEntityMemoryPersistenceService';
+import { InsertQuery } from '../../../../db/infrastructure/memory/models/InsertQuery';
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { LiquidKind } from '../../../domain/models/LiquidKind';

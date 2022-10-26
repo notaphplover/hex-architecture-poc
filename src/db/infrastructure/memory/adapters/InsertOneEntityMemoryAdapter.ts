@@ -3,7 +3,7 @@ import { Converter } from '../../../../common/domain/modules/Converter';
 import { ConverterAsync } from '../../../../common/domain/modules/ConverterAsync';
 import { InsertOneEntityPort } from '../../../application/ports/InsertOneEntityPort';
 import { EntityDb } from '../models/EntityDb';
-import { InsertQuery } from '../service/BaseEntityMemoryPersistenceService';
+import { InsertQuery } from '../models/InsertQuery';
 import { UuidBasedEntityMemoryPersistenceService } from '../service/UuidBasedEntityMemoryPersistenceService';
 
 export class InsertOneEntityMemoryAdapter<

@@ -5,7 +5,7 @@ import { BaseEntityMemoryPersistenceService } from './BaseEntityMemoryPersistenc
 
 export class UuidBasedEntityMemoryPersistenceService<
   TEntity extends EntityDb<string>,
-> extends BaseEntityMemoryPersistenceService<TEntity, string> {
+> extends BaseEntityMemoryPersistenceService<TEntity> {
   protected generateId(): string {
     return randomUUID();
   }

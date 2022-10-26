@@ -1,4 +1,4 @@
 export interface DrinkItemDb {
-  liquidId: string;
+  liquid_id: string;
   milliliters: number;
 }

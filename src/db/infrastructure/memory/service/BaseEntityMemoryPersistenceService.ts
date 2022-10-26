@@ -1,62 +1,28 @@
 import { EntityDb } from '../models/EntityDb';
-import { MapKey } from '../models/MapKey';
+import { Filter } from '../models/Filter';
+import { FindOneQuery } from '../models/FindOneQuery';
+import { FindQuery } from '../models/FindQuery';
+import { FindQueryPaginationOptions } from '../models/FindQueryPaginationOptions';
+import { InsertQuery } from '../models/InsertQuery';
+import { MultipleFilter } from '../models/MultipleFilter';
+import { MultipleFilterKind } from '../models/MultipleFilterKind';
+import { MultipleValueFilter } from '../models/MultipleValueFilter';
+import { SingleFilter } from '../models/SingleFilter';
+import { UpdateQuery } from '../models/UpdateQuery';
+import { ValueFilter } from '../models/ValueFilter';
 
-export type InsertQuery<TEntity extends EntityDb = EntityDb> =
-  | TEntity
-  | Omit<TEntity, 'id'>;
-
-export type SingleFilter<TEntity> = {
-  [P in keyof TEntity]?: ValueFilter<TEntity[P]>;
-};
-
-export interface FindQuery<TEntity extends EntityDb = EntityDb> {
-  filters: Partial<TEntity>;
-  paginationOptions?: FindQueryPaginationOptions;
-}
-
-export interface FindOneQuery<TEntity extends EntityDb = EntityDb> {
-  filters: Partial<TEntity>;
-}
-
-export interface IntersectionFilter<TValue> {
-  kind: MultipleFilterKind.intersection;
-  filters: ValueFilter<TValue>[];
-}
-
-export enum MultipleFilterKind {
-  intersection = 'intersection',
-  union = 'union',
-}
-
-export type MultipleValueFilter<TValue> =
-  | IntersectionFilter<TValue>
-  | UnionFilter<TValue>;
-
-export interface UnionFilter<TValue> {
-  kind: MultipleFilterKind.union;
-  filters: ValueFilter<TValue>[];
-}
-
-export type ValueFilter<TValue> = TValue | MultipleValueFilter<TValue>;
-
-export interface FindQueryPaginationOptions {
-  limit: number;
-  offset: number;
-}
-
-export type UpdateQuery<TEntity extends EntityDb = EntityDb> = Partial<TEntity>;
+type EntityKey<TEntity extends EntityDb> = TEntity['id'];
 
 export abstract class BaseEntityMemoryPersistenceService<
-  TEntity extends EntityDb<TKey>,
-  TKey extends MapKey = MapKey,
+  TEntity extends EntityDb,
 > {
-  readonly #entitiesMap: Map<TKey, TEntity>;
+  readonly #entitiesMap: Map<EntityKey<TEntity>, TEntity>;
 
   constructor() {
     this.#entitiesMap = new Map();
   }
 
-  public delete(id: TKey): void {
+  public delete(id: EntityKey<TEntity>): void {
     this.#removeById(id);
   }
 
@@ -78,7 +44,7 @@ export abstract class BaseEntityMemoryPersistenceService<
     return this.#findByFilters(findOneQuery.filters)[0];
   }
 
-  public update(id: TKey, query: UpdateQuery<TEntity>): void {
+  public update(id: EntityKey<TEntity>, query: UpdateQuery<TEntity>): void {
     const entityToUpdate: TEntity | undefined = this.#findById(id)[0];
 
     if (entityToUpdate !== undefined) {
@@ -91,11 +57,32 @@ export abstract class BaseEntityMemoryPersistenceService<
     }
   }
 
-  #filterEntity(entity: TEntity, filter: Partial<TEntity>) {
-    for (const key in filter) {
-      if (Object.prototype.hasOwnProperty.call(filter, key)) {
-        if (entity[key] !== filter[key]) {
-          return false;
+  #filterEntityByFilter(entity: TEntity, filter: Filter<TEntity>): boolean {
+    if (this.#isMultipleFilter(filter)) {
+      return this.#filterEntityByMultipleFilter(entity, filter);
+    } else {
+      return this.#filterEntityBySingleFilter(entity, filter);
+    }
+  }
+
+  #filterEntityBySingleFilter(
+    entity: TEntity,
+    singleFilter: SingleFilter<TEntity>,
+  ): boolean {
+    for (const key in singleFilter) {
+      if (Object.prototype.hasOwnProperty.call(singleFilter, key)) {
+        const valueFilter: ValueFilter<unknown> = singleFilter[key];
+
+        if (this.#isMultipleValueFilter(valueFilter)) {
+          if (
+            !this.#filterValueByMultipleValueFilter(entity[key], valueFilter)
+          ) {
+            return false;
+          }
+        } else {
+          if (entity[key] !== singleFilter[key]) {
+            return false;
+          }
         }
       }
     }
@@ -103,13 +90,95 @@ export abstract class BaseEntityMemoryPersistenceService<
     return true;
   }
 
-  #getEntitiesToFilter(filters: Partial<TEntity>): TEntity[] {
+  #filterEntityByMultipleFilter(
+    entity: TEntity,
+    multipleFilter: MultipleFilter<TEntity>,
+  ): boolean {
+    let isValid: boolean;
+
+    switch (multipleFilter.kind) {
+      case MultipleFilterKind.intersection:
+        isValid = true;
+
+        for (const filter of multipleFilter.filters) {
+          if (!this.#filterEntityByFilter(entity, filter)) {
+            return false;
+          }
+        }
+
+        break;
+      case MultipleFilterKind.union:
+        isValid = false;
+
+        for (const filter of multipleFilter.filters) {
+          if (this.#filterEntityByFilter(entity, filter)) {
+            return true;
+          }
+        }
+
+        break;
+    }
+
+    return isValid;
+  }
+
+  #filterValueByValueFilter<T>(value: T, valueFilter: ValueFilter<T>): boolean {
+    let result: boolean;
+
+    if (this.#isMultipleValueFilter(valueFilter)) {
+      result = this.#filterValueByMultipleValueFilter(value, valueFilter);
+    } else {
+      result = value === valueFilter;
+    }
+
+    return result;
+  }
+
+  #filterValueByMultipleValueFilter<T>(
+    value: T,
+    multipleValueFilter: MultipleValueFilter<T>,
+  ): boolean {
+    let result: boolean;
+
+    switch (multipleValueFilter.kind) {
+      case MultipleFilterKind.intersection:
+        result = true;
+        for (const filter of multipleValueFilter.filters) {
+          if (!this.#filterValueByValueFilter(value, filter)) {
+            result = false;
+            break;
+          }
+        }
+        break;
+      case MultipleFilterKind.union:
+        result = false;
+        for (const filter of multipleValueFilter.filters) {
+          if (this.#filterValueByValueFilter(value, filter)) {
+            result = true;
+            break;
+          }
+        }
+        break;
+    }
+
+    return result;
+  }
+
+  #getEntitiesToFilter(filters: Filter<TEntity>): TEntity[] {
     let entitiesToFilter: TEntity[];
 
-    if (filters.id === undefined) {
+    if (this.#isMultipleFilter(filters)) {
       entitiesToFilter = [...this.#entitiesMap.values()];
     } else {
-      entitiesToFilter = this.#findById(filters.id);
+      if (filters.id === undefined) {
+        entitiesToFilter = [...this.#entitiesMap.values()];
+      } else {
+        if (this.#isMultipleValueFilter(filters.id)) {
+          entitiesToFilter = [...this.#entitiesMap.values()];
+        } else {
+          entitiesToFilter = this.#findById(filters.id);
+        }
+      }
     }
 
     return entitiesToFilter;
@@ -128,7 +197,7 @@ export abstract class BaseEntityMemoryPersistenceService<
     return entities.slice(startIndex, endIndex);
   }
 
-  #findById(id: TKey): [TEntity] | [] {
+  #findById(id: EntityKey<TEntity>): [TEntity] | [] {
     const entity: TEntity | undefined = this.#entitiesMap.get(id);
 
     let entities: [TEntity] | [];
@@ -142,9 +211,9 @@ export abstract class BaseEntityMemoryPersistenceService<
     return entities;
   }
 
-  #findByFilters(filters: Partial<TEntity>): TEntity[] {
+  #findByFilters(filters: Filter<TEntity>): TEntity[] {
     return this.#getEntitiesToFilter(filters).filter(
-      (entity: TEntity): boolean => this.#filterEntity(entity, filters),
+      (entity: TEntity): boolean => this.#filterEntityByFilter(entity, filters),
     );
   }
 
@@ -158,13 +227,27 @@ export abstract class BaseEntityMemoryPersistenceService<
     return entityToCreate as TEntity;
   }
 
+  #isMultipleFilter<T>(value: Filter<T>): value is MultipleFilter<T> {
+    return Object.values(MultipleFilterKind).includes(
+      (value as MultipleFilter<T>).kind,
+    );
+  }
+
+  #isMultipleValueFilter<T>(
+    value: ValueFilter<T>,
+  ): value is MultipleValueFilter<T> {
+    return Object.values(MultipleFilterKind).includes(
+      (value as MultipleValueFilter<T>).kind,
+    );
+  }
+
   #persistEntity(entity: TEntity): void {
     this.#entitiesMap.set(entity.id, entity);
   }
 
-  #removeById(id: TKey): void {
+  #removeById(id: EntityKey<TEntity>): void {
     this.#entitiesMap.delete(id);
   }
 
-  protected abstract generateId(): TKey;
+  protected abstract generateId(): EntityKey<TEntity>;
 }

@@ -3,7 +3,7 @@ import { Converter } from '../../../../common/domain/modules/Converter';
 import { ConverterAsync } from '../../../../common/domain/modules/ConverterAsync';
 import { FindOneEntityPort } from '../../../application/ports/FindOneEntityPort';
 import { EntityDb } from '../models/EntityDb';
-import { FindOneQuery } from '../service/BaseEntityMemoryPersistenceService';
+import { FindOneQuery } from '../models/FindOneQuery';
 import { UuidBasedEntityMemoryPersistenceService } from '../service/UuidBasedEntityMemoryPersistenceService';
 
 export class FindOneEntityMemoryAdapter<

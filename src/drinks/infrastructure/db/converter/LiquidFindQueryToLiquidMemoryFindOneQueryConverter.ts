@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
-import { FindOneQuery } from '../../../../db/infrastructure/memory/service/BaseEntityMemoryPersistenceService';
+import { FindOneQuery } from '../../../../db/infrastructure/memory/models/FindOneQuery';
 import { LiquidFindQuery } from '../../../application/queries/LiquidFindQuery';
 import { LiquidDb } from '../models/LiquidDb';
 

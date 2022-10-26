@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { FindOneEntityMemoryAdapter } from '../../../../db/infrastructure/memory/adapters/FindOneEntityMemoryAdapter';
-import { FindOneQuery } from '../../../../db/infrastructure/memory/service/BaseEntityMemoryPersistenceService';
+import { FindOneQuery } from '../../../../db/infrastructure/memory/models/FindOneQuery';
 import { UuidBasedEntityMemoryPersistenceService } from '../../../../db/infrastructure/memory/service/UuidBasedEntityMemoryPersistenceService';
 import { LiquidFindQuery } from '../../../application/queries/LiquidFindQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
