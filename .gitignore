@@ -1,6 +1,9 @@
 # npm installed packages
 node_modules/
 
+# env files
+.env
+
 # Jest coverage report
 coverage/
 
