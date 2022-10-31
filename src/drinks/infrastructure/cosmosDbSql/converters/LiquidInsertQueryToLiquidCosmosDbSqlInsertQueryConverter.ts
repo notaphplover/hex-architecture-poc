@@ -8,6 +8,8 @@ import { LiquidKind } from '../../../domain/models/LiquidKind';
 import { LiquidCosmosDbSql } from '../models/LiquidCosmosDbSql';
 import { LiquidKindCosmosDbSql } from '../models/LiquidKindCosmosDbSql';
 
+const PARTITION_KEY: string = 'partition-key';
+
 @Injectable()
 export class LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter
   implements Converter<LiquidInsertQuery, InsertQuery<LiquidCosmosDbSql>>
@@ -38,6 +40,7 @@ export class LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter
         liquidInsertQuery.kind,
       ),
       name: liquidInsertQuery.name,
+      partitionKey: PARTITION_KEY,
     };
   }
 }
