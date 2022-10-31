@@ -37,12 +37,11 @@ export class CosmosSqlContainerModule {
         {
           inject: [CosmosSqlContainerModule.getCosmosDbSqlConfigSymbol()],
           provide: CosmosSqlContainerModule.getCosmosClientProviderSymbol(),
-          useFactory: (cosmosDbSqlConfig: CosmosDbSqlConfig): CosmosClient => {
-            return new CosmosClient({
+          useFactory: (cosmosDbSqlConfig: CosmosDbSqlConfig): CosmosClient =>
+            new CosmosClient({
               endpoint: cosmosDbSqlConfig.endpoint,
               key: cosmosDbSqlConfig.key,
-            });
-          },
+            }),
         },
         {
           inject: [
