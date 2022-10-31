@@ -14,15 +14,11 @@ export const drinksInjectionSymbolsMap = {
   liquidCosmosDbSqlToLiquidConverter: Symbol.for(
     'LiquidCosmosDbSqlToLiquidConverter',
   ),
-  liquidDbToLiquidConverter: Symbol.for('LiquidDbToLiquidConverter'),
   liquidFindQueryApiV1ToLiquidFindQueryConverter: Symbol.for(
     'LiquidFindQueryApiV1ToLiquidFindQueryConverter',
   ),
   liquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter: Symbol.for(
     'LiquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter',
-  ),
-  liquidFindQueryToLiquidMemoryFindOneQueryConverter: Symbol.for(
-    'LiquidFindQueryToLiquidMemoryFindOneQueryConverter',
   ),
   liquidInsertQueryApiV1ToLiquidInsertQueryConverter: Symbol.for(
     'LiquidInsertQueryApiV1ToLiquidInsertQueryConverter',
@@ -30,17 +26,11 @@ export const drinksInjectionSymbolsMap = {
   liquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter: Symbol.for(
     'LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter',
   ),
-  liquidInsertQueryToLiquidMemoryInsertQueryConverter: Symbol.for(
-    'LiquidInsertQueryToLiquidMemoryInsertQueryConverter',
-  ),
   liquidKindApiV1ToLiquidKindConverter: Symbol.for(
     'LiquidKindApiV1ToLiquidKindConverter',
   ),
   liquidKindCosmosDbSqlToLiquidKindConverter: Symbol.for(
     'LiquidKindCosmosDbSqlToLiquidKindConverter',
-  ),
-  liquidKindDbToLiquidKindConverter: Symbol.for(
-    'liquidKindDbToLiquidKindConverter',
   ),
   liquidKindToLiquidKindApiV1Converter: Symbol.for(
     'LiquidKindToLiquidKindApiV1Converter',
@@ -48,10 +38,6 @@ export const drinksInjectionSymbolsMap = {
   liquidKindToLiquidKindCosmosDbSqlConverter: Symbol.for(
     'liquidKindToLiquidKindCosmosDbSqlConverter',
   ),
-  liquidKindToLiquidKindDbConverter: Symbol.for(
-    'liquidKindToLiquidKindDbConverter',
-  ),
-  liquidMemoryPersistenceService: Symbol.for('LiquidMemoryPersistenceService'),
   liquidToLiquidApiV1Converter: Symbol.for('LiquidToLiquidApiV1Converter'),
   postLiquidApiV1HttpRequestController: Symbol.for(
     'PostLiquidApiV1HttpRequestController',

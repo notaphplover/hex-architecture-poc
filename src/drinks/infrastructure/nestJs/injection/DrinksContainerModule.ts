@@ -27,12 +27,6 @@ import { LiquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter } from '../../c
 import { LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter } from '../../cosmosDbSql/converters/LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter';
 import { LiquidKindCosmosDbSqlToLiquidKindConverter } from '../../cosmosDbSql/converters/LiquidKindCosmosDbSqlToLiquidKindConverter';
 import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/converters/LiquidKindToLiquidKindCosmosDbSqlConverter';
-import { LiquidDbToLiquidConverter } from '../../db/converter/LiquidDbToLiquidConverter';
-import { LiquidFindQueryToLiquidMemoryFindOneQueryConverter } from '../../db/converter/LiquidFindQueryToLiquidMemoryFindOneQueryConverter';
-import { LiquidInsertQueryToLiquidMemoryInsertQueryConverter } from '../../db/converter/LiquidInsertQueryToLiquidMemoryInsertQueryConverter';
-import { LiquidKindDbToLiquidKindConverter } from '../../db/converter/LiquidKindDbToLiquidKindConverter';
-import { LiquidKindToLiquidKindDbConverter } from '../../db/converter/LiquidKindToLiquidKindDbConverter';
-import { LiquidDb } from '../../db/models/LiquidDb';
 
 @Module({
   exports: [
@@ -81,10 +75,6 @@ import { LiquidDb } from '../../db/models/LiquidDb';
       useClass: LiquidCosmosDbSqlToLiquidConverter,
     },
     {
-      provide: drinksInjectionSymbolsMap.liquidDbToLiquidConverter,
-      useClass: LiquidDbToLiquidConverter,
-    },
-    {
       provide:
         drinksInjectionSymbolsMap.liquidFindQueryApiV1ToLiquidFindQueryConverter,
       useClass: LiquidFindQueryApiV1ToLiquidFindQueryConverter,
@@ -93,11 +83,6 @@ import { LiquidDb } from '../../db/models/LiquidDb';
       provide:
         drinksInjectionSymbolsMap.liquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter,
       useClass: LiquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter,
-    },
-    {
-      provide:
-        drinksInjectionSymbolsMap.liquidFindQueryToLiquidMemoryFindOneQueryConverter,
-      useClass: LiquidFindQueryToLiquidMemoryFindOneQueryConverter,
     },
     {
       provide:
@@ -110,11 +95,6 @@ import { LiquidDb } from '../../db/models/LiquidDb';
       useClass: LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter,
     },
     {
-      provide:
-        drinksInjectionSymbolsMap.liquidInsertQueryToLiquidMemoryInsertQueryConverter,
-      useClass: LiquidInsertQueryToLiquidMemoryInsertQueryConverter,
-    },
-    {
       provide: drinksInjectionSymbolsMap.liquidKindApiV1ToLiquidKindConverter,
       useClass: LiquidKindApiV1ToLiquidKindConverter,
     },
@@ -124,10 +104,6 @@ import { LiquidDb } from '../../db/models/LiquidDb';
       useClass: LiquidKindCosmosDbSqlToLiquidKindConverter,
     },
     {
-      provide: drinksInjectionSymbolsMap.liquidKindDbToLiquidKindConverter,
-      useClass: LiquidKindDbToLiquidKindConverter,
-    },
-    {
       provide: drinksInjectionSymbolsMap.liquidKindToLiquidKindApiV1Converter,
       useClass: LiquidKindToLiquidKindApiV1Converter,
     },
@@ -135,14 +111,6 @@ import { LiquidDb } from '../../db/models/LiquidDb';
       provide:
         drinksInjectionSymbolsMap.liquidKindToLiquidKindCosmosDbSqlConverter,
       useClass: LiquidKindToLiquidKindCosmosDbSqlConverter,
-    },
-    {
-      provide: drinksInjectionSymbolsMap.liquidKindToLiquidKindDbConverter,
-      useClass: LiquidKindToLiquidKindDbConverter,
-    },
-    {
-      provide: drinksInjectionSymbolsMap.liquidMemoryPersistenceService,
-      useValue: new UuidBasedEntityMemoryPersistenceService<LiquidDb>(),
     },
     {
       provide: drinksInjectionSymbolsMap.liquidToLiquidApiV1Converter,
