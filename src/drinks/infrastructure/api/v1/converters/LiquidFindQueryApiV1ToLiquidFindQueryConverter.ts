@@ -10,7 +10,7 @@ export class LiquidFindQueryApiV1ToLiquidFindQueryConverter
 {
   public convert(liquidFindQueryApiV1: LiquidFindQueryApiV1): LiquidFindQuery {
     return {
-      id: liquidFindQueryApiV1.id,
+      ids: [liquidFindQueryApiV1.id],
     };
   }
 }

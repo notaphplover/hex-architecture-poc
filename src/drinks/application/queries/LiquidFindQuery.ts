@@ -1,3 +1,3 @@
 export interface LiquidFindQuery {
-  id: string;
+  ids: string[];
 }
