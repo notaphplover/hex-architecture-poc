@@ -20,6 +20,9 @@ export const drinksInjectionSymbolsMap = {
   liquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter: Symbol.for(
     'LiquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter',
   ),
+  liquidFindQueryToLiquidCosmosDbSqlFindQueryConverter: Symbol.for(
+    'LiquidFindQueryToLiquidCosmosDbSqlFindQueryConverter',
+  ),
   liquidInsertQueryApiV1ToLiquidInsertQueryConverter: Symbol.for(
     'LiquidInsertQueryApiV1ToLiquidInsertQueryConverter',
   ),
