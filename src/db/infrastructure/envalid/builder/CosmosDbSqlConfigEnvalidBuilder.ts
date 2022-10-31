@@ -5,6 +5,7 @@ import { Builder } from '../../../../common/domain/modules/Builder';
 import { CosmosDbSqlConfig } from '../../cosmosDbSql/models/CosmosDbSqlConfig';
 
 interface CosmosDbSqlEnvVariables {
+  COSMOS_DB_SQL_DB_NAME: string;
   COSMOS_DB_SQL_ENDPOINT: string;
   COSMOS_DB_SQL_KEY: string;
 }
@@ -16,11 +17,13 @@ export class CosmosDbSqlConfigEnvalidBuilder
   public build(): CosmosDbSqlConfig {
     const cosmosDbEnvVariables: Readonly<CosmosDbSqlEnvVariables> =
       cleanEnv<CosmosDbSqlEnvVariables>(process.env, {
+        COSMOS_DB_SQL_DB_NAME: str(),
         COSMOS_DB_SQL_ENDPOINT: str(),
         COSMOS_DB_SQL_KEY: str(),
       });
 
     const cosmosDbConfig: CosmosDbSqlConfig = {
+      dbName: cosmosDbEnvVariables.COSMOS_DB_SQL_DB_NAME,
       endpoint: cosmosDbEnvVariables.COSMOS_DB_SQL_ENDPOINT,
       key: cosmosDbEnvVariables.COSMOS_DB_SQL_KEY,
     };
