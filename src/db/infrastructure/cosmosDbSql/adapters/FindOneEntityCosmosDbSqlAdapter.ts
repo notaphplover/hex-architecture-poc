@@ -25,11 +25,11 @@ export class FindOneEntityCosmosDbSqlAdapter<
   readonly #entityDbToEntityConverter:
     | Converter<TEntityDb, TEntity>
     | ConverterAsync<TEntityDb, TEntity>;
-  readonly #findOneQueryToCosmosDbSqlFindOneQueryConverter: Converter<
+  readonly #findQueryToCosmosDbSqlFindOneQueryConverter: Converter<
     TQuery,
     FindOneQuery<TEntityDb>
   >;
-  readonly #findOneQueryToCosmosDbSqlFeedOptionsConverter:
+  readonly #findQueryToCosmosDbSqlFeedOptionsConverter:
     | Converter<TQuery, FeedOptions>
     | undefined;
   readonly #cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter: Converter<
@@ -42,11 +42,11 @@ export class FindOneEntityCosmosDbSqlAdapter<
     entityDbToEntityConverter:
       | Converter<TEntityDb, TEntity>
       | ConverterAsync<TEntityDb, TEntity>,
-    findOneQueryToCosmosDbSqlFindOneQueryConverter: Converter<
+    findQueryToCosmosDbSqlFindOneQueryConverter: Converter<
       TQuery,
       FindOneQuery<TEntityDb>
     >,
-    findOneQueryToCosmosDbSqlFeedOptionsConverter:
+    findQueryToCosmosDbSqlFeedOptionsConverter:
       | Converter<TQuery, FeedOptions>
       | undefined,
     cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter: Converter<
@@ -56,24 +56,24 @@ export class FindOneEntityCosmosDbSqlAdapter<
   ) {
     this.#container = container;
     this.#entityDbToEntityConverter = entityDbToEntityConverter;
-    this.#findOneQueryToCosmosDbSqlFindOneQueryConverter =
-      findOneQueryToCosmosDbSqlFindOneQueryConverter;
-    this.#findOneQueryToCosmosDbSqlFeedOptionsConverter =
-      findOneQueryToCosmosDbSqlFeedOptionsConverter;
+    this.#findQueryToCosmosDbSqlFindOneQueryConverter =
+      findQueryToCosmosDbSqlFindOneQueryConverter;
+    this.#findQueryToCosmosDbSqlFeedOptionsConverter =
+      findQueryToCosmosDbSqlFeedOptionsConverter;
     this.#cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter =
       cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter;
   }
 
   public async adapt(query: TQuery): Promise<TEntity | undefined> {
     const findOneQuery: FindOneQuery<TEntityDb> =
-      this.#findOneQueryToCosmosDbSqlFindOneQueryConverter.convert(query);
+      this.#findQueryToCosmosDbSqlFindOneQueryConverter.convert(query);
     const sqlQuerySpec: SqlQuerySpec =
       this.#cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter.convert(
         findOneQuery,
       );
 
     const feedOptions: FeedOptions | undefined =
-      this.#findOneQueryToCosmosDbSqlFeedOptionsConverter?.convert(query);
+      this.#findQueryToCosmosDbSqlFeedOptionsConverter?.convert(query);
 
     const response: FeedResponse<TEntityDb> = await (
       this.#container.items.query(
