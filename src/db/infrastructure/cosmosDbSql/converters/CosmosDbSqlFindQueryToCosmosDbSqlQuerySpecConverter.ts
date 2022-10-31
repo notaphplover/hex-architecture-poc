@@ -28,32 +28,33 @@ interface SqlQuerySpecWhereClauseGenerationResult {
   parameters: SqlParameter[];
 }
 
+const CONTAINER_COSMOS_DB_SQL_QUERY_ALIAS: string = 'c';
+
 @Injectable()
 export class CosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter<
   TEntity extends EntityDb<MapKey>,
 > implements Converter<FindQuery<TEntity>, SqlQuerySpec>
 {
-  readonly #collectionName: string;
-
-  constructor(collectionName: string) {
-    this.#collectionName = collectionName;
-  }
-
   public convert(findQuery: FindQuery<TEntity>): SqlQuerySpec {
     const whereClauseGenerationResult: SqlQuerySpecWhereClauseGenerationResult =
       this.#getWhereClause(findQuery.filters);
 
+    const whereClausePaginationOptionsFragment: string =
+      findQuery.paginationOptions === undefined
+        ? ''
+        : this.#getOffsetLimitClause(findQuery.paginationOptions);
+
     return {
       parameters: whereClauseGenerationResult.parameters,
-      query: `${this.#getSelectClause()} ${this.#getFromClause()} ${
+      query: `${this.#getSelectClause()} ${this.#getFromClause(findQuery)} ${
         whereClauseGenerationResult.whereClause
-      } ${this.#getOffsetLimitClause(findQuery.paginationOptions)}`,
+      } ${whereClausePaginationOptionsFragment}`,
     };
   }
 
   #buildParameterGenerator(): () => string {
     let parameterCount: number = 0;
-    const parameterGenerator: () => string = () => `p${parameterCount++}`;
+    const parameterGenerator: () => string = () => `@p${parameterCount++}`;
 
     return parameterGenerator;
   }
@@ -62,8 +63,8 @@ export class CosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter<
     return 'SELECT *';
   }
 
-  #getFromClause(): string {
-    return `FROM ${this.#collectionName}`;
+  #getFromClause(findQuery: FindQuery<TEntity>): string {
+    return `FROM ${findQuery.collectionName} ${CONTAINER_COSMOS_DB_SQL_QUERY_ALIAS}`;
   }
 
   #getWhereClause(
@@ -72,7 +73,11 @@ export class CosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter<
     const parameterGenerator: () => string = this.#buildParameterGenerator();
 
     const [whereClause, parameters]: [string, SqlParameter[]] =
-      this.#getWhereClauseFromFilter('c', filter, parameterGenerator);
+      this.#getWhereClauseFromFilter(
+        CONTAINER_COSMOS_DB_SQL_QUERY_ALIAS,
+        filter,
+        parameterGenerator,
+      );
 
     const sqlQuerySpecWhereClauseGenerationProgress: SqlQuerySpecWhereClauseGenerationResult =
       {
@@ -255,21 +260,10 @@ export class CosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter<
     return [whereClauseFragment, parameters];
   }
 
-  #getOffsetLimitClause(
-    paginationOptions: FindQueryPaginationOptions | undefined,
-  ) {
-    let clause: string = '';
-
-    if (paginationOptions !== undefined) {
-      if (paginationOptions.offset !== undefined) {
-        clause += `OFFSET ${paginationOptions.offset} `;
-      }
-      if (paginationOptions.limit !== undefined) {
-        clause += `LIMIT ${paginationOptions.limit} `;
-      }
-    }
-
-    return clause;
+  #getOffsetLimitClause(paginationOptions: FindQueryPaginationOptions) {
+    return `OFFSET ${paginationOptions?.offset ?? 0} LIMIT ${
+      paginationOptions.limit
+    } `;
   }
 
   #isMultipleFilter<T>(value: Filter<T>): value is MultipleFilter<T> {
@@ -538,8 +532,7 @@ export class CosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter<
     if (typeof valueFilter === 'number') {
       parameterValue = `${valueFilter}`;
     } else {
-      const stringifiedValueFilter: string = valueFilter.toString();
-      parameterValue = `'${stringifiedValueFilter}'`;
+      parameterValue = valueFilter.toString();
     }
 
     return parameterValue;

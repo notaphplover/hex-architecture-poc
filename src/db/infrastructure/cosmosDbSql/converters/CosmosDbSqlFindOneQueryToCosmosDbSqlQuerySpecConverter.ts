@@ -33,6 +33,7 @@ export class CosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter<
 
   public convert(findOneQuery: FindOneQuery<TEntity>): SqlQuerySpec {
     const findQuery: FindQuery<TEntity> = {
+      collectionName: findOneQuery.collectionName,
       filters: findOneQuery.filters,
       paginationOptions: {
         limit: 1,

@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 import { Container } from '@azure/cosmos';
 
 import { Entity } from '../../../../common/domain/models/Entity';
@@ -7,6 +9,7 @@ import { AppError } from '../../../../errors/application/models/AppError';
 import { AppErrorKind } from '../../../../errors/application/models/AppErrorKind';
 import { InsertOneEntityPort } from '../../../application/ports/InsertOneEntityPort';
 import { EntityDb } from '../models/EntityDb';
+import { InsertQuery } from '../models/InsertQuery';
 
 export class InsertOneEntityCosmosDbSqlAdapter<
   TQuery,
@@ -20,7 +23,7 @@ export class InsertOneEntityCosmosDbSqlAdapter<
     | ConverterAsync<TEntityDb, TEntity>;
   readonly #insertOneQueryToCosmosDbSqlInsertQueryConverter: Converter<
     TQuery,
-    TEntityDb
+    InsertQuery<TEntityDb>
   >;
 
   constructor(
@@ -40,11 +43,19 @@ export class InsertOneEntityCosmosDbSqlAdapter<
   }
 
   public async adapt(query: TQuery): Promise<TEntity> {
-    const insertQuery: TEntityDb =
+    const insertQuery: InsertQuery<TEntityDb> =
       this.#insertOneQueryToCosmosDbSqlInsertQueryConverter.convert(query);
 
+    let entityDbToCreate: TEntityDb;
+
+    if ((insertQuery as TEntityDb).id === undefined) {
+      entityDbToCreate = { ...insertQuery, id: randomUUID() } as TEntityDb;
+    } else {
+      entityDbToCreate = insertQuery as TEntityDb;
+    }
+
     const entityDb: TEntityDb | undefined = (
-      await this.#container.items.create(insertQuery, {
+      await this.#container.items.create(entityDbToCreate, {
         disableAutomaticIdGeneration: true,
       })
     ).resource;

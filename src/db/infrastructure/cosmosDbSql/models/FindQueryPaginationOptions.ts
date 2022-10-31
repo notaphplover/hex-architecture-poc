@@ -1,4 +1,4 @@
 export interface FindQueryPaginationOptions {
-  limit?: number;
+  limit: number;
   offset?: number;
 }

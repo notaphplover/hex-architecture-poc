@@ -15,6 +15,15 @@ export class CosmosSqlContainerModule {
     containerNames: string[],
   ): DynamicModule {
     return {
+      exports: [
+        CosmosSqlContainerModule.getDbProviderSymbol(dbAlias),
+        ...containerNames.map((containerName: string): symbol =>
+          CosmosSqlContainerModule.getContainerProviderSymbol(
+            dbAlias,
+            containerName,
+          ),
+        ),
+      ],
       imports: [DbContainerModule],
       module: CosmosSqlContainerModule,
       providers: [
