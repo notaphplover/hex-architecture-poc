@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { CosmosDbSqlContainerName } from '../../../../db/infrastructure/cosmosDbSql/models/CosmosDbSqlContainerName';
 import { CosmosDbSqlDatabaseAlias } from '../../../../db/infrastructure/cosmosDbSql/models/CosmosDbSqlDatabaseAlias';
-import { UuidBasedEntityMemoryPersistenceService } from '../../../../db/infrastructure/memory/service/UuidBasedEntityMemoryPersistenceService';
 import { CosmosSqlContainerModule } from '../../../../db/infrastructure/nestJs/injection/CosmosSqlContainerModule';
 import { DbContainerModule } from '../../../../db/infrastructure/nestJs/injection/DbContainerModule';
 import { ErrorsContainerModule } from '../../../../errors/infrastructure/nestJs/ErrorsContainerModule';
@@ -10,7 +9,6 @@ import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/Http
 import { FindOneLiquidHandler } from '../../../application/handlers/FindOneLiquidHandler';
 import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
-import { Drink } from '../../../domain/models/Drink';
 import { LiquidFindQueryApiV1ToLiquidFindQueryConverter } from '../../api/v1/converters/LiquidFindQueryApiV1ToLiquidFindQueryConverter';
 import { LiquidInsertQueryApiV1ToLiquidInsertQueryConverter } from '../../api/v1/converters/LiquidInsertQueryApiV1ToLiquidInsertQueryConverter';
 import { LiquidKindApiV1ToLiquidKindConverter } from '../../api/v1/converters/LiquidKindApiV1ToLiquidKindConverter';
@@ -20,6 +18,7 @@ import { AzureGetLiquidApiV1HttpRequestController } from '../../azure/infrastruc
 import { AzurePostLiquidApiV1HttpRequestController } from '../../azure/infrastructure/AzurePostLiquidApiV1HttpRequestController';
 import { GetLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/GetLiquidApiV1HttpRequestProcessor';
 import { PostLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/PostLiquidApiV1HttpRequestProcessor';
+import { FindLiquidsCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/FindLiquidsCosmosDbSqlAdapter';
 import { FindOneLiquidCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/FindOneLiquidCosmosDbSqlAdapter';
 import { InsertOneLiquidCosmosDbAdapter } from '../../cosmosDbSql/adapters/InsertOneLiquidCosmosDbSqlAdapter';
 import { LiquidCosmosDbSqlToLiquidConverter } from '../../cosmosDbSql/converters/LiquidCosmosDbSqlToLiquidConverter';
@@ -44,8 +43,8 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
   ],
   providers: [
     {
-      provide: drinksInjectionSymbolsMap.drinkMemoryPersistenceService,
-      useValue: new UuidBasedEntityMemoryPersistenceService<Drink>(),
+      provide: drinksInjectionSymbolsMap.findLiquidsCosmosDbSqlAdapter,
+      useClass: FindLiquidsCosmosDbSqlAdapter,
     },
     {
       provide: drinksInjectionSymbolsMap.findOneLiquidAdapter,

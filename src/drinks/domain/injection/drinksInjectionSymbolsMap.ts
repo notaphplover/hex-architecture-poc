@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const drinksInjectionSymbolsMap = {
-  drinkMemoryPersistenceService: Symbol.for('DrinkMemoryPersistenceService'),
+  findLiquidsCosmosDbSqlAdapter: Symbol.for('FindLiquidsCosmosDbSqlAdapter'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
   findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
   getLiquidApiV1HttpRequestController: Symbol.for(
