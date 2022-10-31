@@ -11,6 +11,7 @@ import { CosmosDbSqlConfigEnvalidBuilder } from '../../envalid/builder/CosmosDbS
 
 @Module({
   exports: [
+    dbInjectionSymbolsMap.cosmosDbSqlConfigBuilder,
     dbInjectionSymbolsMap.cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter,
     dbInjectionSymbolsMap.cosmosDbSqlFindQueryToCosmosDbSqlQuerySpecConverter,
   ],

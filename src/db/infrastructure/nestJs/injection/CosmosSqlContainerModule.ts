@@ -10,20 +10,25 @@ import { DbContainerModule } from './DbContainerModule';
   imports: [DbContainerModule],
 })
 export class CosmosSqlContainerModule {
-  public static forDb(dbName: string, containerNames: string[]): DynamicModule {
+  public static forDb(
+    dbAlias: string,
+    containerNames: string[],
+  ): DynamicModule {
     return {
       imports: [DbContainerModule],
       module: CosmosSqlContainerModule,
       providers: [
         {
           inject: [dbInjectionSymbolsMap.cosmosDbSqlConfigBuilder],
-          provide: CosmosSqlContainerModule.getCosmosClientProviderSymbol(),
+          provide: CosmosSqlContainerModule.getCosmosDbSqlConfigSymbol(),
           useFactory: (
             cosmosDbSqlConfigBuilder: Builder<CosmosDbSqlConfig>,
-          ): CosmosClient => {
-            const cosmosDbSqlConfig: CosmosDbSqlConfig =
-              cosmosDbSqlConfigBuilder.build();
-
+          ): CosmosDbSqlConfig => cosmosDbSqlConfigBuilder.build(),
+        },
+        {
+          inject: [CosmosSqlContainerModule.getCosmosDbSqlConfigSymbol()],
+          provide: CosmosSqlContainerModule.getCosmosClientProviderSymbol(),
+          useFactory: (cosmosDbSqlConfig: CosmosDbSqlConfig): CosmosClient => {
             return new CosmosClient({
               endpoint: cosmosDbSqlConfig.endpoint,
               key: cosmosDbSqlConfig.key,
@@ -31,17 +36,26 @@ export class CosmosSqlContainerModule {
           },
         },
         {
-          inject: [CosmosSqlContainerModule.getCosmosClientProviderSymbol()],
-          provide: CosmosSqlContainerModule.getDbProviderSymbol(dbName),
-          useFactory: async (cosmosClient: CosmosClient): Promise<Database> =>
-            (await cosmosClient.databases.createIfNotExists({ id: dbName }))
-              .database,
+          inject: [
+            CosmosSqlContainerModule.getCosmosClientProviderSymbol(),
+            CosmosSqlContainerModule.getCosmosDbSqlConfigSymbol(),
+          ],
+          provide: CosmosSqlContainerModule.getDbProviderSymbol(dbAlias),
+          useFactory: async (
+            cosmosClient: CosmosClient,
+            cosmosDbSqlConfig: CosmosDbSqlConfig,
+          ): Promise<Database> =>
+            (
+              await cosmosClient.databases.createIfNotExists({
+                id: cosmosDbSqlConfig.dbName,
+              })
+            ).database,
         },
         ...containerNames.map(
           (containerName: string): Provider => ({
-            inject: [CosmosSqlContainerModule.getDbProviderSymbol(dbName)],
+            inject: [CosmosSqlContainerModule.getDbProviderSymbol(dbAlias)],
             provide: CosmosSqlContainerModule.getContainerProviderSymbol(
-              dbName,
+              dbAlias,
               containerName,
             ),
             useFactory: (database: Database): Container =>
@@ -56,14 +70,18 @@ export class CosmosSqlContainerModule {
     dbName: string,
     containerName: string,
   ): symbol {
-    return Symbol.for(`cosmos_sql_db_${dbName}_container_${containerName}`);
+    return Symbol.for(`cosmos_db_sql_${dbName}_container_${containerName}`);
   }
 
   public static getCosmosClientProviderSymbol(): symbol {
     return Symbol.for('CosmosClient');
   }
 
+  public static getCosmosDbSqlConfigSymbol(): symbol {
+    return Symbol.for('CosmosDbSqlConfig');
+  }
+
   public static getDbProviderSymbol(dbName: string): symbol {
-    return Symbol.for(`cosmos_sql_db_${dbName}`);
+    return Symbol.for(`cosmos_db_sql_${dbName}`);
   }
 }
