@@ -1,3 +1,3 @@
-export interface Converter<TInput, TOutput> {
-  convert(input: TInput): TOutput;
+export interface Converter<TInput, TOutput, TContext = void> {
+  convert(input: TInput, context: TContext): TOutput;
 }
