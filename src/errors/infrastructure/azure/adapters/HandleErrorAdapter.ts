@@ -53,6 +53,10 @@ export class HandleErrorAdapter implements Port<unknown, HttpResponse> {
         statusCode = httpStatus.INTERNAL_SERVER_ERROR;
         errorMessage = this.#stringifyError(error);
         break;
+      case AppErrorKind.unprocessableOperation:
+        statusCode = httpStatus.UNPROCESSABLE_ENTITY;
+        errorMessage = this.#stringifyError(error);
+        break;
     }
 
     return {
