@@ -33,7 +33,7 @@ export class InsertOneEntityCosmosDbSqlAdapter<
       | ConverterAsync<TEntityDb, TEntity>,
     insertOneQueryToCosmosDbSqlInsertQueryConverter: Converter<
       TQuery,
-      TEntityDb
+      InsertQuery<TEntityDb>
     >,
   ) {
     this.#container = container;
