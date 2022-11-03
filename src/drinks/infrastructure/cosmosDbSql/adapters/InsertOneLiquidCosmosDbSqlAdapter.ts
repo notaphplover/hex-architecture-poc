@@ -6,6 +6,7 @@ import { ConverterAsync } from '../../../../common/domain/modules/ConverterAsync
 import { InsertOneEntityCosmosDbSqlAdapter } from '../../../../db/infrastructure/cosmosDbSql/adapters/InsertOneEntityCosmosDbSqlAdapter';
 import { CosmosDbSqlContainerName } from '../../../../db/infrastructure/cosmosDbSql/models/CosmosDbSqlContainerName';
 import { CosmosDbSqlDatabaseAlias } from '../../../../db/infrastructure/cosmosDbSql/models/CosmosDbSqlDatabaseAlias';
+import { InsertQuery } from '../../../../db/infrastructure/cosmosDbSql/models/InsertQuery';
 import { CosmosSqlContainerModule } from '../../../../db/infrastructure/nestJs/injection/CosmosSqlContainerModule';
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
@@ -36,7 +37,7 @@ export class InsertOneLiquidCosmosDbAdapter extends InsertOneEntityCosmosDbSqlAd
     )
     liquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter: Converter<
       LiquidInsertQuery,
-      LiquidCosmosDbSql
+      InsertQuery<LiquidCosmosDbSql>
     >,
   ) {
     super(
