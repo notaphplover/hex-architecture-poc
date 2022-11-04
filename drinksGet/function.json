@@ -1,0 +1,20 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "direction": "in",
+      "methods": [
+        "get"
+      ],
+      "name": "req",
+      "route": "v1/drinks/{id:guid}",
+      "type": "httpTrigger"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ],
+  "scriptFile": "../dist/drinks/infrastructure/azure/httpTrigers/getDrinksV1Id.js"
+}
