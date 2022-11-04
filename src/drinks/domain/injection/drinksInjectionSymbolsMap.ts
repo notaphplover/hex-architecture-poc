@@ -1,7 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const drinksInjectionSymbolsMap = {
-  drinkCosmosSqlDbToDrinkConverter: Symbol.for(
-    'DrinkCosmosSqlDbToDrinkConverter',
+  drinkCosmosDbSqlToDrinkConverter: Symbol.for(
+    'DrinkCosmosDbSqlToDrinkConverter',
+  ),
+  drinkFindQueryApiV1ToDrinkFindQueryConverter: Symbol.for(
+    'DrinkFindQueryApiV1ToDrinkFindQueryConverter',
+  ),
+  drinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter: Symbol.for(
+    'DrinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter',
   ),
   drinkInsertQueryApiV1ToDrinkInsertQueryConverter: Symbol.for(
     'DrinkInsertQueryApiV1ToDrinkInsertQueryConverter',
@@ -35,6 +41,7 @@ export const drinksInjectionSymbolsMap = {
   ),
   drinkToDrinkApiV1Converter: Symbol.for('DrinkToDrinkApiV1Converter'),
   findLiquidsAdapter: Symbol.for('FindLiquidsAdapter'),
+  findOneDrinkAdapter: Symbol.for('FindOneDrinkAdapter'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
   findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
   getLiquidApiV1HttpRequestController: Symbol.for(

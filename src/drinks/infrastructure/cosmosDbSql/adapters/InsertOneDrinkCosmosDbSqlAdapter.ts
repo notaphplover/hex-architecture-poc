@@ -27,7 +27,7 @@ export class InsertOneDrinkCosmosDbSqlAdapter extends InsertOneEntityCosmosDbSql
       ),
     )
     container: Container,
-    @Inject(drinksInjectionSymbolsMap.drinkCosmosSqlDbToDrinkConverter)
+    @Inject(drinksInjectionSymbolsMap.drinkCosmosDbSqlToDrinkConverter)
     drinkCosmosDbSqlToDrinkConverter:
       | Converter<DrinkCosmosDbSql, Drink>
       | ConverterAsync<DrinkCosmosDbSql, Drink>,
