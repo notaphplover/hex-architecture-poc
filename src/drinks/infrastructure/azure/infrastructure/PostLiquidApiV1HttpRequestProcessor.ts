@@ -50,10 +50,14 @@ export class PostLiquidApiV1HttpRequestProcessor
   #isLiquidInsertQueryApiV1(
     value: Record<string, unknown>,
   ): value is Record<string, unknown> & LiquidInsertQueryApiV1 {
+    const valueAsLiquidInsertQueryApiV1: LiquidInsertQueryApiV1 &
+      Record<string, unknown> = value as LiquidInsertQueryApiV1 &
+      Record<string, unknown>;
+
     return (
       Object.values(LiquidKindApiV1).includes(
-        value['kind'] as LiquidKindApiV1,
-      ) && typeof value['name'] === 'string'
+        valueAsLiquidInsertQueryApiV1.kind,
+      ) && typeof valueAsLiquidInsertQueryApiV1.name === 'string'
     );
   }
 }

@@ -47,7 +47,11 @@ export class GetLiquidApiV1HttpRequestProcessor
 
   #isLiquidFindQueryApiV1(
     value: Record<string, unknown>,
-  ): value is Record<string, unknown> & LiquidFindQueryApiV1 {
-    return typeof value['id'] === 'string';
+  ): value is LiquidFindQueryApiV1 & Record<string, unknown> {
+    const valueAsLiquidFindQueryApiV1: LiquidFindQueryApiV1 &
+      Record<string, unknown> = value as LiquidFindQueryApiV1 &
+      Record<string, unknown>;
+
+    return typeof valueAsLiquidFindQueryApiV1.id === 'string';
   }
 }
