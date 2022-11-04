@@ -26,6 +26,7 @@ import { LiquidToLiquidApiV1Converter } from '../../api/v1/converters/LiquidToLi
 import { AzureGetLiquidApiV1HttpRequestController } from '../../azure/infrastructure/AzureGetLiquidApiV1HttpRequestController';
 import { AzurePostDrinkApiV1HttpRequestController } from '../../azure/infrastructure/AzurePostDrinkApiV1HttpRequestController';
 import { AzurePostLiquidApiV1HttpRequestController } from '../../azure/infrastructure/AzurePostLiquidApiV1HttpRequestController';
+import { GetDrinkApiV1HttpRequestProcessor } from '../../azure/infrastructure/GetDrinkApiV1HttpRequestProcessor';
 import { GetLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/GetLiquidApiV1HttpRequestProcessor';
 import { PostDrinkApiV1HttpRequestProcessor } from '../../azure/infrastructure/PostDrinkApiV1HttpRequestProcessor';
 import { PostLiquidApiV1HttpRequestProcessor } from '../../azure/infrastructure/PostLiquidApiV1HttpRequestProcessor';
@@ -147,6 +148,10 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
     {
       provide: drinksInjectionSymbolsMap.findOneLiquidHandler,
       useClass: FindOneLiquidHandler,
+    },
+    {
+      provide: drinksInjectionSymbolsMap.getDrinkApiV1HttpRequestProcessor,
+      useClass: GetDrinkApiV1HttpRequestProcessor,
     },
     {
       provide: drinksInjectionSymbolsMap.getLiquidApiV1HttpRequestController,
