@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { FindOneQuery } from '../../../../db/infrastructure/cosmosDbSql/models/FindOneQuery';
 import { FindQuery } from '../../../../db/infrastructure/cosmosDbSql/models/FindQuery';
 import { LiquidFindQuery } from '../../../application/queries/LiquidFindQuery';
+import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { LiquidCosmosDbSql } from '../models/LiquidCosmosDbSql';
 
 @Injectable()
@@ -16,6 +17,9 @@ export class LiquidFindQueryToLiquidCosmosDbSqlFindQueryConverter
   >;
 
   constructor(
+    @Inject(
+      drinksInjectionSymbolsMap.liquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter,
+    )
     liquidFindQueryToLiquidCosmosDbSqlFindOneQueryConverter: Converter<
       LiquidFindQuery,
       FindOneQuery<LiquidCosmosDbSql>
