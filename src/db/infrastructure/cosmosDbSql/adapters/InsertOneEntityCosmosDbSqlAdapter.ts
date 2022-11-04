@@ -21,20 +21,18 @@ export class InsertOneEntityCosmosDbSqlAdapter<
   readonly #entityDbToEntityConverter:
     | Converter<TEntityDb, TEntity>
     | ConverterAsync<TEntityDb, TEntity>;
-  readonly #insertOneQueryToCosmosDbSqlInsertQueryConverter: Converter<
-    TQuery,
-    InsertQuery<TEntityDb>
-  >;
+  readonly #insertOneQueryToCosmosDbSqlInsertQueryConverter:
+    | Converter<TQuery, InsertQuery<TEntityDb>>
+    | ConverterAsync<TQuery, InsertQuery<TEntityDb>>;
 
   constructor(
     container: Container,
     entityDbToEntityConverter:
       | Converter<TEntityDb, TEntity>
       | ConverterAsync<TEntityDb, TEntity>,
-    insertOneQueryToCosmosDbSqlInsertQueryConverter: Converter<
-      TQuery,
-      InsertQuery<TEntityDb>
-    >,
+    insertOneQueryToCosmosDbSqlInsertQueryConverter:
+      | Converter<TQuery, InsertQuery<TEntityDb>>
+      | ConverterAsync<TQuery, InsertQuery<TEntityDb>>,
   ) {
     this.#container = container;
     this.#entityDbToEntityConverter = entityDbToEntityConverter;
@@ -44,7 +42,9 @@ export class InsertOneEntityCosmosDbSqlAdapter<
 
   public async adapt(query: TQuery): Promise<TEntity> {
     const insertQuery: InsertQuery<TEntityDb> =
-      this.#insertOneQueryToCosmosDbSqlInsertQueryConverter.convert(query);
+      await this.#insertOneQueryToCosmosDbSqlInsertQueryConverter.convert(
+        query,
+      );
 
     let entityDbToCreate: TEntityDb;
 
