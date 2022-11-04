@@ -6,6 +6,7 @@ import { CosmosSqlContainerModule } from '../../../../db/infrastructure/nestJs/i
 import { DbContainerModule } from '../../../../db/infrastructure/nestJs/injection/DbContainerModule';
 import { ErrorsContainerModule } from '../../../../errors/infrastructure/nestJs/ErrorsContainerModule';
 import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/HttpContainerModule';
+import { FindOneDrinkHandler } from '../../../application/handlers/FindOneDrinkHandler';
 import { FindOneLiquidHandler } from '../../../application/handlers/FindOneLiquidHandler';
 import { InsertOneDrinkHandler } from '../../../application/handlers/InsertOneDrinkHandler';
 import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
@@ -134,6 +135,10 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
     {
       provide: drinksInjectionSymbolsMap.findOneDrinkAdapter,
       useClass: FindOneDrinkCosmosDbSqlAdapter,
+    },
+    {
+      provide: drinksInjectionSymbolsMap.findOneDrinkHandler,
+      useClass: FindOneDrinkHandler,
     },
     {
       provide: drinksInjectionSymbolsMap.findOneLiquidAdapter,

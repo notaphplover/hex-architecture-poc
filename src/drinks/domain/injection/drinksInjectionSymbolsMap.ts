@@ -42,6 +42,7 @@ export const drinksInjectionSymbolsMap = {
   drinkToDrinkApiV1Converter: Symbol.for('DrinkToDrinkApiV1Converter'),
   findLiquidsAdapter: Symbol.for('FindLiquidsAdapter'),
   findOneDrinkAdapter: Symbol.for('FindOneDrinkAdapter'),
+  findOneDrinkHandler: Symbol.for('FindOneDrinkHandler'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
   findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
   getLiquidApiV1HttpRequestController: Symbol.for(
