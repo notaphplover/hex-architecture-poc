@@ -1,0 +1,20 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "direction": "in",
+      "methods": [
+        "post"
+      ],
+      "name": "req",
+      "route": "v1/drinks",
+      "type": "httpTrigger"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ],
+  "scriptFile": "../dist/drinks/infrastructure/azure/httpTrigers/postDrinksV1.js"
+}

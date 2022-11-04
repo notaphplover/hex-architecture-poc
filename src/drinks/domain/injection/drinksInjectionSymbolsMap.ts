@@ -1,6 +1,40 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const drinksInjectionSymbolsMap = {
-  findLiquidsCosmosDbSqlAdapter: Symbol.for('FindLiquidsCosmosDbSqlAdapter'),
+  drinkCosmosSqlDbToDrinkConverter: Symbol.for(
+    'DrinkCosmosSqlDbToDrinkConverter',
+  ),
+  drinkInsertQueryApiV1ToDrinkInsertQueryConverter: Symbol.for(
+    'DrinkInsertQueryApiV1ToDrinkInsertQueryConverter',
+  ),
+  drinkInsertQueryToDrinkCosmosDbSqlInsertQueryConverter: Symbol.for(
+    'DrinkInsertQueryToDrinkCosmosDbSqlInsertQueryConverter',
+  ),
+  drinkItemApiV1ToDrinkItemConverter: Symbol.for(
+    'DrinkItemApiV1ToDrinkItemConverter',
+  ),
+  drinkItemCosmosDbSqlToDrinkItemConverter: Symbol.for(
+    'DrinkItemCosmosDbSqlToDrinkItemConverter',
+  ),
+  drinkItemToDrinkItemApiV1Converter: Symbol.for(
+    'DrinkItemToDrinkItemApiV1Converter',
+  ),
+  drinkItemToDrinkItemCosmosDbSqlConverter: Symbol.for(
+    'DrinkItemToDrinkItemCosmosDbSqlConverter',
+  ),
+  drinkKindApiV1ToDrinkKindConverter: Symbol.for(
+    'DrinkKindApiV1ToDrinkKindConverter',
+  ),
+  drinkKindCosmosDbSqlToDrinkKindConverter: Symbol.for(
+    'DrinkKindCosmosDbSqlToDrinkKindConverter',
+  ),
+  drinkKindToDrinkKindApiV1Converter: Symbol.for(
+    'DrinkKindToDrinkKindApiV1Converter',
+  ),
+  drinkKindToDrinkKindCosmosDbSqlConverter: Symbol.for(
+    'DrinkKindToDrinkKindCosmosDbSqlConverter',
+  ),
+  drinkToDrinkApiV1Converter: Symbol.for('DrinkToDrinkApiV1Converter'),
+  findLiquidsAdapter: Symbol.for('FindLiquidsAdapter'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
   findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
   getLiquidApiV1HttpRequestController: Symbol.for(
@@ -9,6 +43,8 @@ export const drinksInjectionSymbolsMap = {
   getLiquidApiV1HttpRequestProcessor: Symbol.for(
     'GetLiquidApiV1HttpRequestProcessor',
   ),
+  insertOneDrinkAdapter: Symbol.for('InsertOneDrinkAdapter'),
+  insertOneDrinkHandler: Symbol.for('InsertOneDrinkHandler'),
   insertOneLiquidAdapter: Symbol.for('InsertOneLiquidAdapter'),
   insertOneLiquidHandler: Symbol.for('InsertOneLiquidHandler'),
   liquidCosmosDbSqlToLiquidConverter: Symbol.for(
@@ -42,6 +78,12 @@ export const drinksInjectionSymbolsMap = {
     'liquidKindToLiquidKindCosmosDbSqlConverter',
   ),
   liquidToLiquidApiV1Converter: Symbol.for('LiquidToLiquidApiV1Converter'),
+  postDrinkApiV1HttpRequestController: Symbol.for(
+    'PostDrinkApiV1HttpRequestController',
+  ),
+  postDrinkApiV1HttpRequestProcessor: Symbol.for(
+    'PostDrinkApiV1HttpRequestProcessor',
+  ),
   postLiquidApiV1HttpRequestController: Symbol.for(
     'PostLiquidApiV1HttpRequestController',
   ),
