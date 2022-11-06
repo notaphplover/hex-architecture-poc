@@ -43,9 +43,9 @@ export const drinksInjectionSymbolsMap = {
   drinkToDrinkApiV1Converter: Symbol.for('DrinkToDrinkApiV1Converter'),
   findLiquidsAdapter: Symbol.for('FindLiquidsAdapter'),
   findOneDrinkAdapter: Symbol.for('FindOneDrinkAdapter'),
-  findOneDrinkHandler: Symbol.for('FindOneDrinkHandler'),
+  findOneDrinkUseCase: Symbol.for('FindOneDrinkUseCase'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
-  findOneLiquidHandler: Symbol.for('FindOneLiquidHandler'),
+  findOneLiquidUseCase: Symbol.for('FindOneLiquidUseCase'),
   getDrinkApiV1HttpRequestController: Symbol.for(
     'GetDrinkApiV1HttpRequestController',
   ),
@@ -59,9 +59,9 @@ export const drinksInjectionSymbolsMap = {
     'GetLiquidApiV1HttpRequestProcessor',
   ),
   insertOneDrinkAdapter: Symbol.for('InsertOneDrinkAdapter'),
-  insertOneDrinkHandler: Symbol.for('InsertOneDrinkHandler'),
+  insertOneDrinkUseCase: Symbol.for('InsertOneDrinkUseCase'),
   insertOneLiquidAdapter: Symbol.for('InsertOneLiquidAdapter'),
-  insertOneLiquidHandler: Symbol.for('InsertOneLiquidHandler'),
+  insertOneLiquidUseCase: Symbol.for('InsertOneLiquidUseCase'),
   liquidCosmosDbSqlToLiquidConverter: Symbol.for(
     'LiquidCosmosDbSqlToLiquidConverter',
   ),

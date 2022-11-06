@@ -1,8 +1,8 @@
 import { HttpRequest, HttpResponse } from '@azure/functions';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Handler } from '../../../../common/application/modules/Handler';
 import { Port } from '../../../../common/application/modules/Port';
+import { UseCase } from '../../../../common/application/modules/UseCase';
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { errorInjectionSymbolsMap } from '../../../../errors/domain/errorInjectionSymbolsMap';
 import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
@@ -36,8 +36,8 @@ export class AzurePostLiquidApiV1HttpRequestController extends AzureHttpSingleEn
       RequestWithBody,
       LiquidInsertQuery
     >,
-    @Inject(drinksInjectionSymbolsMap.insertOneLiquidHandler)
-    insertOneLiquidHandler: Handler<LiquidInsertQuery, Liquid>,
+    @Inject(drinksInjectionSymbolsMap.insertOneLiquidUseCase)
+    insertOneLiquidUseCase: UseCase<LiquidInsertQuery, Liquid>,
     @Inject(drinksInjectionSymbolsMap.liquidToLiquidApiV1Converter)
     liquidToLiquidApiV1Converter: Converter<Liquid, LiquidApiV1>,
     @Inject(
@@ -56,7 +56,7 @@ export class AzurePostLiquidApiV1HttpRequestController extends AzureHttpSingleEn
       handleErrorPort,
       azurePostLiquidApiV1HttpRequestToRequestConverter,
       postLiquidApiV1HttpRequestProcessor,
-      insertOneLiquidHandler,
+      insertOneLiquidUseCase,
       liquidToLiquidApiV1Converter,
       httpResponseCreateQueryToResponseConverter,
     );

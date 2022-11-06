@@ -6,10 +6,10 @@ import { CosmosSqlContainerModule } from '../../../../db/infrastructure/nestJs/i
 import { DbContainerModule } from '../../../../db/infrastructure/nestJs/injection/DbContainerModule';
 import { ErrorsContainerModule } from '../../../../errors/infrastructure/nestJs/ErrorsContainerModule';
 import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/HttpContainerModule';
-import { FindOneDrinkHandler } from '../../../application/handlers/FindOneDrinkHandler';
-import { FindOneLiquidHandler } from '../../../application/handlers/FindOneLiquidHandler';
-import { InsertOneDrinkHandler } from '../../../application/handlers/InsertOneDrinkHandler';
-import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
+import { FindOneDrinkUseCase } from '../../../application/useCases/FindOneDrinkUseCase';
+import { FindOneLiquidUseCase } from '../../../application/useCases/FindOneLiquidUseCase';
+import { InsertOneDrinkUseCase } from '../../../application/useCases/InsertOneDrinkUseCase';
+import { InsertOneLiquidUseCase } from '../../../application/useCases/InsertOneLiquidUseCase';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { DrinkCreationRuleValidator } from '../../../domain/ruleValidators/DrinkCreationRuleValidator';
 import { DrinkFindQueryApiV1ToDrinkFindQueryConverter } from '../../api/v1/converters/DrinkFindQueryApiV1ToDrinkFindQueryConverter';
@@ -144,16 +144,16 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
       useClass: FindOneDrinkCosmosDbSqlAdapter,
     },
     {
-      provide: drinksInjectionSymbolsMap.findOneDrinkHandler,
-      useClass: FindOneDrinkHandler,
+      provide: drinksInjectionSymbolsMap.findOneDrinkUseCase,
+      useClass: FindOneDrinkUseCase,
     },
     {
       provide: drinksInjectionSymbolsMap.findOneLiquidAdapter,
       useClass: FindOneLiquidCosmosDbSqlAdapter,
     },
     {
-      provide: drinksInjectionSymbolsMap.findOneLiquidHandler,
-      useClass: FindOneLiquidHandler,
+      provide: drinksInjectionSymbolsMap.findOneLiquidUseCase,
+      useClass: FindOneLiquidUseCase,
     },
     {
       provide: drinksInjectionSymbolsMap.getDrinkApiV1HttpRequestController,
@@ -172,16 +172,16 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
       useClass: GetLiquidApiV1HttpRequestProcessor,
     },
     {
-      provide: drinksInjectionSymbolsMap.insertOneLiquidHandler,
-      useClass: InsertOneLiquidHandler,
+      provide: drinksInjectionSymbolsMap.insertOneLiquidUseCase,
+      useClass: InsertOneLiquidUseCase,
     },
     {
       provide: drinksInjectionSymbolsMap.insertOneDrinkAdapter,
       useClass: InsertOneDrinkCosmosDbSqlAdapter,
     },
     {
-      provide: drinksInjectionSymbolsMap.insertOneDrinkHandler,
-      useClass: InsertOneDrinkHandler,
+      provide: drinksInjectionSymbolsMap.insertOneDrinkUseCase,
+      useClass: InsertOneDrinkUseCase,
     },
     {
       provide: drinksInjectionSymbolsMap.insertOneLiquidAdapter,

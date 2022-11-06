@@ -1,8 +1,8 @@
 import { HttpRequest, HttpResponse } from '@azure/functions';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Handler } from '../../../../common/application/modules/Handler';
 import { Port } from '../../../../common/application/modules/Port';
+import { UseCase } from '../../../../common/application/modules/UseCase';
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { errorInjectionSymbolsMap } from '../../../../errors/domain/errorInjectionSymbolsMap';
 import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
@@ -36,8 +36,8 @@ export class AzurePostDrinkApiV1HttpRequestController extends AzureHttpSingleEnt
       RequestWithBody,
       DrinkInsertQuery
     >,
-    @Inject(drinksInjectionSymbolsMap.insertOneDrinkHandler)
-    insertOneDrinkHandler: Handler<DrinkInsertQuery, Drink>,
+    @Inject(drinksInjectionSymbolsMap.insertOneDrinkUseCase)
+    insertOneDrinkUseCase: UseCase<DrinkInsertQuery, Drink>,
     @Inject(drinksInjectionSymbolsMap.drinkToDrinkApiV1Converter)
     drinkToDrinkApiV1Converter: Converter<Drink, DrinkApiV1>,
     @Inject(
@@ -52,7 +52,7 @@ export class AzurePostDrinkApiV1HttpRequestController extends AzureHttpSingleEnt
       handleErrorPort,
       azurePostDrinkApiV1HttpRequestToRequestConverter,
       postDrinkApiV1HttpRequestProcessor,
-      insertOneDrinkHandler,
+      insertOneDrinkUseCase,
       drinkToDrinkApiV1Converter,
       httpResponseCreateQueryToResponseConverter,
     );

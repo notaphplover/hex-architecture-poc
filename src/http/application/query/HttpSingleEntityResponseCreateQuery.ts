@@ -3,7 +3,7 @@ export interface HttpSingleEntityResponseCreateQuery<
   TModel,
   TModelApi,
 > {
-  readonly handlerParams: TParams;
+  readonly useCaseParams: TParams;
   readonly model: TModel | undefined;
   readonly modelApi: TModelApi | undefined;
 }

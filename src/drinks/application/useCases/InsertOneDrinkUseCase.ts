@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Handler } from '../../../common/application/modules/Handler';
+import { UseCase } from '../../../common/application/modules/UseCase';
 import { InsertOneEntityPort } from '../../../db/application/ports/InsertOneEntityPort';
 import { AppError } from '../../../errors/application/models/AppError';
 import { AppErrorKind } from '../../../errors/application/models/AppErrorKind';
@@ -12,7 +12,7 @@ import { DrinkCreationRuleValidator } from '../../domain/ruleValidators/DrinkCre
 import { DrinkInsertQuery } from '../queries/DrinkInsertQuery';
 
 @Injectable()
-export class InsertOneDrinkHandler implements Handler<DrinkInsertQuery, Drink> {
+export class InsertOneDrinkUseCase implements UseCase<DrinkInsertQuery, Drink> {
   readonly #drinkCreationRuleValidator: DrinkCreationRuleValidator;
   readonly #insertOneDrinkPort: InsertOneEntityPort<DrinkInsertQuery, Drink>;
 

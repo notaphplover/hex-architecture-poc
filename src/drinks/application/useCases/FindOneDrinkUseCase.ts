@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Handler } from '../../../common/application/modules/Handler';
+import { UseCase } from '../../../common/application/modules/UseCase';
 import { FindOneEntityPort } from '../../../db/application/ports/FindOneEntityPort';
 import { drinksInjectionSymbolsMap } from '../../domain/injection/drinksInjectionSymbolsMap';
 import { Drink } from '../../domain/models/Drink';
 import { DrinkFindQuery } from '../queries/DrinkFindQuery';
 
 @Injectable()
-export class FindOneDrinkHandler
-  implements Handler<DrinkFindQuery, Drink | undefined>
+export class FindOneDrinkUseCase
+  implements UseCase<DrinkFindQuery, Drink | undefined>
 {
   readonly #findOneDrinkPort: FindOneEntityPort<DrinkFindQuery, Drink>;
 

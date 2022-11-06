@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '@azure/functions';
 
-import { Handler } from '../../../../common/application/modules/Handler';
 import { Port } from '../../../../common/application/modules/Port';
+import { UseCase } from '../../../../common/application/modules/UseCase';
 import { Converter } from '../../../../common/domain/modules/Converter';
 import { Controller } from '../../../../common/infrastructure/modules/Controller';
 import { Request } from '../../../application/models/Request';
@@ -22,7 +22,7 @@ export class AzureHttpSingleEntityRequestController<
     TRequest
   >;
   readonly #requestProcessor: RequestProcessor<TRequest, TParams>;
-  readonly #applicationHandler: Handler<TParams, TModel | undefined>;
+  readonly #applicationUseCase: UseCase<TParams, TModel | undefined>;
   readonly #modelToModelApiConverter: Converter<TModel, TModelApi>;
   readonly #httpResponseCreateQueryToResponseConverter: Converter<
     HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
@@ -33,7 +33,7 @@ export class AzureHttpSingleEntityRequestController<
     handleErrorPort: Port<unknown, HttpResponse>,
     azureHttpRequestToRequestConverter: Converter<HttpRequest, TRequest>,
     requestProcessor: RequestProcessor<TRequest, TParams>,
-    applicationHandler: Handler<TParams, TModel | undefined>,
+    applicationUseCase: UseCase<TParams, TModel | undefined>,
     modelToModelApiConverter: Converter<TModel, TModelApi>,
     httpResponseGenerationParamsToResponseConverter: Converter<
       HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
@@ -44,7 +44,7 @@ export class AzureHttpSingleEntityRequestController<
     this.#azureHttpRequestToRequestConverter =
       azureHttpRequestToRequestConverter;
     this.#requestProcessor = requestProcessor;
-    this.#applicationHandler = applicationHandler;
+    this.#applicationUseCase = applicationUseCase;
     this.#modelToModelApiConverter = modelToModelApiConverter;
     this.#httpResponseCreateQueryToResponseConverter =
       httpResponseGenerationParamsToResponseConverter;
@@ -56,7 +56,7 @@ export class AzureHttpSingleEntityRequestController<
         this.#azureHttpRequestToRequestConverter.convert(httpRequest);
       const params: TParams = await this.#requestProcessor.process(request);
       const modelOrUndefined: TModel | undefined =
-        await this.#applicationHandler.handle(params);
+        await this.#applicationUseCase.handle(params);
 
       let httpResponseCreateQuery: HttpSingleEntityResponseCreateQuery<
         TParams,
@@ -66,18 +66,18 @@ export class AzureHttpSingleEntityRequestController<
 
       if (modelOrUndefined === undefined) {
         httpResponseCreateQuery = {
-          handlerParams: params,
           model: modelOrUndefined,
           modelApi: undefined,
+          useCaseParams: params,
         };
       } else {
         const modelApi: TModelApi =
           this.#modelToModelApiConverter.convert(modelOrUndefined);
 
         httpResponseCreateQuery = {
-          handlerParams: params,
           model: modelOrUndefined,
           modelApi: modelApi,
+          useCaseParams: params,
         };
       }
 
