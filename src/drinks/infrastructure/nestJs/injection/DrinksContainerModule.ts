@@ -11,6 +11,7 @@ import { FindOneLiquidHandler } from '../../../application/handlers/FindOneLiqui
 import { InsertOneDrinkHandler } from '../../../application/handlers/InsertOneDrinkHandler';
 import { InsertOneLiquidHandler } from '../../../application/handlers/InsertOneLiquidHandler';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
+import { DrinkCreationRuleValidator } from '../../../domain/ruleValidators/DrinkCreationRuleValidator';
 import { DrinkFindQueryApiV1ToDrinkFindQueryConverter } from '../../api/v1/converters/DrinkFindQueryApiV1ToDrinkFindQueryConverter';
 import { DrinkInsertQueryApiV1ToDrinkInsertQueryConverter } from '../../api/v1/converters/DrinkInsertQueryApiV1ToDrinkInsertQueryConverter';
 import { DrinkItemApiV1ToDrinkItemConverter } from '../../api/v1/converters/DrinkItemApiV1ToDrinkItemConverter';
@@ -69,6 +70,10 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
     {
       provide: drinksInjectionSymbolsMap.drinkCosmosDbSqlToDrinkConverter,
       useClass: DrinkCosmosSqlDbToDrinkConverter,
+    },
+    {
+      provide: drinksInjectionSymbolsMap.drinkCreationRuleValidator,
+      useClass: DrinkCreationRuleValidator,
     },
     {
       provide:

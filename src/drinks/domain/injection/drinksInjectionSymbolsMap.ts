@@ -3,6 +3,7 @@ export const drinksInjectionSymbolsMap = {
   drinkCosmosDbSqlToDrinkConverter: Symbol.for(
     'DrinkCosmosDbSqlToDrinkConverter',
   ),
+  drinkCreationRuleValidator: Symbol.for('DrinkCreationRuleValidator'),
   drinkFindQueryApiV1ToDrinkFindQueryConverter: Symbol.for(
     'DrinkFindQueryApiV1ToDrinkFindQueryConverter',
   ),
