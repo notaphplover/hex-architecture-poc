@@ -1,9 +1,9 @@
 import { HttpRequest, HttpResponse } from '@azure/functions';
 
+import { Controller } from '../../../../common/application/modules/Controller';
 import { Port } from '../../../../common/application/modules/Port';
 import { UseCase } from '../../../../common/application/modules/UseCase';
 import { Converter } from '../../../../common/domain/modules/Converter';
-import { Controller } from '../../../../common/infrastructure/modules/Controller';
 import { Request } from '../../../application/models/Request';
 import { RequestWithBody } from '../../../application/models/RequestWithBody';
 import { RequestProcessor } from '../../../application/modules/RequestProcessor';

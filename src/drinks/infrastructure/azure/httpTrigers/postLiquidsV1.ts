@@ -1,7 +1,7 @@
 import { Context, HttpRequest, HttpResponse } from '@azure/functions';
 import { INestApplicationContext } from '@nestjs/common';
 
-import { Controller } from '../../../../common/infrastructure/modules/Controller';
+import { Controller } from '../../../../common/application/modules/Controller';
 import { nestJsApplicationContextPromise } from '../../../../ioc/infrastructure/nestJs/nestApplicationContextPromise';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 
