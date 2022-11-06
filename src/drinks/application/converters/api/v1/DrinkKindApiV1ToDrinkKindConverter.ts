@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../../common/domain/modules/Converter';
 import { DrinkKind } from '../../../../domain/models/DrinkKind';
-import { DrinkKindApiV1 } from '../models/DrinkKindApiV1';
+import { DrinkKindApiV1 } from '../../../models/api/v1/DrinkKindApiV1';
 
 const drinkKindApiV1ToDrinkKindMap: {
   [TKey in DrinkKindApiV1]: DrinkKind;

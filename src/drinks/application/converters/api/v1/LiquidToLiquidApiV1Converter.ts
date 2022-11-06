@@ -4,8 +4,8 @@ import { Converter } from '../../../../../common/domain/modules/Converter';
 import { drinksInjectionSymbolsMap } from '../../../../domain/injection/drinksInjectionSymbolsMap';
 import { Liquid } from '../../../../domain/models/Liquid';
 import { LiquidKind } from '../../../../domain/models/LiquidKind';
-import { LiquidApiV1 } from '../models/LiquidApiV1';
-import { LiquidKindApiV1 } from '../models/LiquidKindApiV1';
+import { LiquidApiV1 } from '../../../models/api/v1/LiquidApiV1';
+import { LiquidKindApiV1 } from '../../../models/api/v1/LiquidKindApiV1';
 
 @Injectable()
 export class LiquidToLiquidApiV1Converter

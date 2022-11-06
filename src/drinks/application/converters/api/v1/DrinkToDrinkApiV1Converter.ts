@@ -5,9 +5,9 @@ import { drinksInjectionSymbolsMap } from '../../../../domain/injection/drinksIn
 import { Drink } from '../../../../domain/models/Drink';
 import { DrinkItem } from '../../../../domain/models/DrinkItem';
 import { DrinkKind } from '../../../../domain/models/DrinkKind';
-import { DrinkApiV1 } from '../models/DrinkApiV1';
-import { DrinkItemApiV1 } from '../models/DrinkItemApiV1';
-import { DrinkKindApiV1 } from '../models/DrinkKindApiV1';
+import { DrinkApiV1 } from '../../../models/api/v1/DrinkApiV1';
+import { DrinkItemApiV1 } from '../../../models/api/v1/DrinkItemApiV1';
+import { DrinkKindApiV1 } from '../../../models/api/v1/DrinkKindApiV1';
 
 @Injectable()
 export class DrinkToDrinkApiV1Converter

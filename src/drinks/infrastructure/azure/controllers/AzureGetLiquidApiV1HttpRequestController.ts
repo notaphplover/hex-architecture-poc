@@ -10,10 +10,10 @@ import { RequestProcessor } from '../../../../http/application/modules/RequestPr
 import { HttpSingleEntityResponseCreateQuery } from '../../../../http/application/query/HttpSingleEntityResponseCreateQuery';
 import { httpInjectionSymbolsMap } from '../../../../http/domain/httpInjectionSymbolsMap';
 import { AzureHttpSingleEntityRequestController } from '../../../../http/infrastructure/azure/modules/AzureHttpSingleEntityRequestController';
+import { LiquidApiV1 } from '../../../application/models/api/v1/LiquidApiV1';
 import { LiquidFindQuery } from '../../../application/queries/LiquidFindQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { Liquid } from '../../../domain/models/Liquid';
-import { LiquidApiV1 } from '../../api/v1/models/LiquidApiV1';
 
 @Injectable()
 export class AzureGetLiquidApiV1HttpRequestController extends AzureHttpSingleEntityRequestController<

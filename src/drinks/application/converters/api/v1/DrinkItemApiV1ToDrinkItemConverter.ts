@@ -5,7 +5,7 @@ import { AppError } from '../../../../../errors/application/models/AppError';
 import { AppErrorKind } from '../../../../../errors/application/models/AppErrorKind';
 import { DrinkItem } from '../../../../domain/models/DrinkItem';
 import { Liquid } from '../../../../domain/models/Liquid';
-import { DrinkItemApiV1 } from '../models/DrinkItemApiV1';
+import { DrinkItemApiV1 } from '../../../models/api/v1/DrinkItemApiV1';
 
 @Injectable()
 export class DrinkItemApiV1ToDrinkItemConverter

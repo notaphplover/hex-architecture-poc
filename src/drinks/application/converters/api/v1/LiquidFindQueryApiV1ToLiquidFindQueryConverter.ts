@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../../common/domain/modules/Converter';
-import { LiquidFindQuery } from '../../../../application/queries/LiquidFindQuery';
-import { LiquidFindQueryApiV1 } from '../queries/LiquidFindQueryApiV1';
+import { LiquidFindQueryApiV1 } from '../../../queries/api/v1/LiquidFindQueryApiV1';
+import { LiquidFindQuery } from '../../../queries/LiquidFindQuery';
 
 @Injectable()
 export class LiquidFindQueryApiV1ToLiquidFindQueryConverter

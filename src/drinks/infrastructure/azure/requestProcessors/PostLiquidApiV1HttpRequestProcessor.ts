@@ -5,10 +5,10 @@ import { AppError } from '../../../../errors/application/models/AppError';
 import { AppErrorKind } from '../../../../errors/application/models/AppErrorKind';
 import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
 import { RequestProcessor } from '../../../../http/application/modules/RequestProcessor';
+import { LiquidKindApiV1 } from '../../../application/models/api/v1/LiquidKindApiV1';
+import { LiquidInsertQueryApiV1 } from '../../../application/queries/api/v1/LiquidInsertQueryApiV1';
 import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
-import { LiquidKindApiV1 } from '../../api/v1/models/LiquidKindApiV1';
-import { LiquidInsertQueryApiV1 } from '../../api/v1/queries/LiquidInsertQueryApiV1';
 
 @Injectable()
 export class PostLiquidApiV1HttpRequestProcessor

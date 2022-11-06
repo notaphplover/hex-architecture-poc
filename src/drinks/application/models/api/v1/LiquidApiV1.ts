@@ -1,4 +1,4 @@
-import { LiquidKindApiV1 } from './LiquidKindApiV1';
+import { LiquidKindApiV1 } from '../../../../application/models/api/v1/LiquidKindApiV1';
 
 export interface LiquidApiV1 {
   id: string;

@@ -5,15 +5,15 @@ import { ConverterAsync } from '../../../../../common/domain/modules/ConverterAs
 import { FindEntitiesPort } from '../../../../../db/application/ports/FindEntititesPort';
 import { AppError } from '../../../../../errors/application/models/AppError';
 import { AppErrorKind } from '../../../../../errors/application/models/AppErrorKind';
-import { DrinkInsertQuery } from '../../../../application/queries/DrinkInsertQuery';
-import { LiquidFindQuery } from '../../../../application/queries/LiquidFindQuery';
 import { drinksInjectionSymbolsMap } from '../../../../domain/injection/drinksInjectionSymbolsMap';
 import { DrinkItem } from '../../../../domain/models/DrinkItem';
 import { DrinkKind } from '../../../../domain/models/DrinkKind';
 import { Liquid } from '../../../../domain/models/Liquid';
-import { DrinkItemApiV1 } from '../models/DrinkItemApiV1';
-import { DrinkKindApiV1 } from '../models/DrinkKindApiV1';
-import { DrinkInsertQueryApiV1 } from '../queries/DrinkInsertQueryApiV1';
+import { DrinkItemApiV1 } from '../../../models/api/v1/DrinkItemApiV1';
+import { DrinkKindApiV1 } from '../../../models/api/v1/DrinkKindApiV1';
+import { DrinkInsertQueryApiV1 } from '../../../queries/api/v1/DrinkInsertQueryApiV1';
+import { DrinkInsertQuery } from '../../../queries/DrinkInsertQuery';
+import { LiquidFindQuery } from '../../../queries/LiquidFindQuery';
 
 @Injectable()
 export class DrinkInsertQueryApiV1ToDrinkInsertQueryConverter

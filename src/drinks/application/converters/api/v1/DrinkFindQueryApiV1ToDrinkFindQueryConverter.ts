@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../../common/domain/modules/Converter';
-import { DrinkFindQuery } from '../../../../application/queries/DrinkFindQuery';
-import { DrinkFindQueryApiV1 } from '../queries/DrinkFindQueryApiV1';
+import { DrinkFindQueryApiV1 } from '../../../queries/api/v1/DrinkFindQueryApiV1';
+import { DrinkFindQuery } from '../../../queries/DrinkFindQuery';
 
 @Injectable()
 export class DrinkFindQueryApiV1ToDrinkFindQueryConverter

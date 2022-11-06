@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../../common/domain/modules/Converter';
 import { LiquidKind } from '../../../../domain/models/LiquidKind';
-import { LiquidKindApiV1 } from '../models/LiquidKindApiV1';
+import { LiquidKindApiV1 } from '../../../models/api/v1/LiquidKindApiV1';
 
 const liquidKindToLiquidKindApiV1Map: {
   [TKey in LiquidKind]: LiquidKindApiV1;

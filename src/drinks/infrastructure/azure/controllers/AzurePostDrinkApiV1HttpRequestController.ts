@@ -10,10 +10,10 @@ import { RequestProcessor } from '../../../../http/application/modules/RequestPr
 import { HttpSingleEntityResponseCreateQuery } from '../../../../http/application/query/HttpSingleEntityResponseCreateQuery';
 import { httpInjectionSymbolsMap } from '../../../../http/domain/httpInjectionSymbolsMap';
 import { AzureHttpSingleEntityRequestController } from '../../../../http/infrastructure/azure/modules/AzureHttpSingleEntityRequestController';
+import { DrinkApiV1 } from '../../../application/models/api/v1/DrinkApiV1';
 import { DrinkInsertQuery } from '../../../application/queries/DrinkInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { Drink } from '../../../domain/models/Drink';
-import { DrinkApiV1 } from '../../api/v1/models/DrinkApiV1';
 
 @Injectable()
 export class AzurePostDrinkApiV1HttpRequestController extends AzureHttpSingleEntityRequestController<

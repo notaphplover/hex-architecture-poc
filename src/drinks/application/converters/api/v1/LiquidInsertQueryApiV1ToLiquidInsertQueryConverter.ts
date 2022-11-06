@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../../common/domain/modules/Converter';
-import { LiquidInsertQuery } from '../../../../application/queries/LiquidInsertQuery';
 import { drinksInjectionSymbolsMap } from '../../../../domain/injection/drinksInjectionSymbolsMap';
 import { LiquidKind } from '../../../../domain/models/LiquidKind';
-import { LiquidKindApiV1 } from '../models/LiquidKindApiV1';
-import { LiquidInsertQueryApiV1 } from '../queries/LiquidInsertQueryApiV1';
+import { LiquidKindApiV1 } from '../../../models/api/v1/LiquidKindApiV1';
+import { LiquidInsertQueryApiV1 } from '../../../queries/api/v1/LiquidInsertQueryApiV1';
+import { LiquidInsertQuery } from '../../../queries/LiquidInsertQuery';
 
 @Injectable()
 export class LiquidInsertQueryApiV1ToLiquidInsertQueryConverter
