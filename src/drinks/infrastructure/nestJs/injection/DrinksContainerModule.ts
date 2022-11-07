@@ -7,6 +7,7 @@ import { DbContainerModule } from '../../../../db/infrastructure/nestJs/injectio
 import { ErrorsContainerModule } from '../../../../errors/infrastructure/nestJs/ErrorsContainerModule';
 import { HttpContainerModule } from '../../../../http/infrastructure/nestJs/HttpContainerModule';
 import { GetDrinkApiV1RequestController } from '../../../application/controllers/GetDrinkApiV1RequestController';
+import { GetLiquidApiV1RequestController } from '../../../application/controllers/GetLiquidApiV1RequestController';
 import { DrinkFindQueryApiV1ToDrinkFindQueryConverter } from '../../../application/converters/api/v1/DrinkFindQueryApiV1ToDrinkFindQueryConverter';
 import { DrinkInsertQueryApiV1ToDrinkInsertQueryConverter } from '../../../application/converters/api/v1/DrinkInsertQueryApiV1ToDrinkInsertQueryConverter';
 import { DrinkItemApiV1ToDrinkItemConverter } from '../../../application/converters/api/v1/DrinkItemApiV1ToDrinkItemConverter';
@@ -175,6 +176,10 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
     {
       provide: drinksInjectionSymbolsMap.getLiquidApiV1HttpRequestProcessor,
       useClass: GetLiquidApiV1HttpRequestProcessor,
+    },
+    {
+      provide: drinksInjectionSymbolsMap.getLiquidApiV1RequestController,
+      useClass: GetLiquidApiV1RequestController,
     },
     {
       provide: drinksInjectionSymbolsMap.insertOneLiquidUseCase,
