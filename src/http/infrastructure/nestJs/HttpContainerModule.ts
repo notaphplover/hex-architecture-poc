@@ -7,6 +7,7 @@ import { AzureHttpRequestToRequestConverter } from '../azure/converters/AzureHtt
 import { AzureHttpRequestToRequestWithBodyConverter } from '../azure/converters/AzureHttpRequestToRequestWithBodyConverter';
 import { HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter } from '../azure/converters/HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter';
 import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from '../azure/converters/HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter';
+import { ResponseToAzureHttpResponseConverter } from '../azure/converters/ResponseToAzureHttpResponseConverter';
 
 @Module({
   exports: [
@@ -35,6 +36,10 @@ import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from 
       provide:
         httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
       useClass: HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
+    },
+    {
+      provide: httpInjectionSymbolsMap.responseToAzureHttpResponseConverter,
+      useClass: ResponseToAzureHttpResponseConverter,
     },
     {
       provide:

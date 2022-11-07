@@ -12,6 +12,9 @@ export const httpInjectionSymbolsMap = {
   httpResponseCreateQueryToPostResponseWithEntityCreatedConverter: Symbol.for(
     'HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter',
   ),
+  responseToAzureHttpResponseConverter: Symbol.for(
+    'ResponseToAzureHttpResponseConverter',
+  ),
   singleEntityHttpGetResponseCreateQueryToResponseConverter: Symbol.for(
     'SingleEntityHttpGetResponseCreateQueryToResponseConverter',
   ),
