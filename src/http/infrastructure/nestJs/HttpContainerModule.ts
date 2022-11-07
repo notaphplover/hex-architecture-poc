@@ -5,8 +5,6 @@ import { SingleEntityHttpPostResponseCreateQueryToResponseConverter } from '../.
 import { httpInjectionSymbolsMap } from '../../domain/httpInjectionSymbolsMap';
 import { AzureHttpRequestToRequestConverter } from '../azure/converters/AzureHttpRequestToRequestConverter';
 import { AzureHttpRequestToRequestWithBodyConverter } from '../azure/converters/AzureHttpRequestToRequestWithBodyConverter';
-import { HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter } from '../azure/converters/HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter';
-import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from '../azure/converters/HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter';
 import { ResponseToAzureHttpResponseConverter } from '../azure/converters/ResponseToAzureHttpResponseConverter';
 
 @Module({
@@ -16,8 +14,6 @@ import { ResponseToAzureHttpResponseConverter } from '../azure/converters/Respon
     httpInjectionSymbolsMap.responseToAzureHttpResponseConverter,
     httpInjectionSymbolsMap.singleEntityHttpGetResponseCreateQueryToResponseConverter,
     httpInjectionSymbolsMap.singleEntityHttpPostResponseCreateQueryToResponseConverter,
-    httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
-    httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
   ],
   providers: [
     {
@@ -28,16 +24,6 @@ import { ResponseToAzureHttpResponseConverter } from '../azure/converters/Respon
       provide:
         httpInjectionSymbolsMap.azureHttpRequestToRequestWithBodyConverter,
       useClass: AzureHttpRequestToRequestWithBodyConverter,
-    },
-    {
-      provide:
-        httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
-      useClass: HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
-    },
-    {
-      provide:
-        httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
-      useClass: HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
     },
     {
       provide: httpInjectionSymbolsMap.responseToAzureHttpResponseConverter,
