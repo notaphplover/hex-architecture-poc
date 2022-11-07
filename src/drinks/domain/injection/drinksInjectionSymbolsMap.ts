@@ -1,5 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const drinksInjectionSymbolsMap = {
+  azureGetDrinkApiV1HttpRequestController: Symbol.for(
+    'AzureGetDrinkApiV1HttpRequestController',
+  ),
+  azureGetLiquidApiV1HttpRequestController: Symbol.for(
+    'AzureGetLiquidApiV1HttpRequestController',
+  ),
+  azurePostDrinkApiV1HttpRequestController: Symbol.for(
+    'AzurePostDrinkApiV1HttpRequestController',
+  ),
+  azurePostLiquidApiV1HttpRequestController: Symbol.for(
+    'AzurePostLiquidApiV1HttpRequestController',
+  ),
   drinkCosmosDbSqlToDrinkConverter: Symbol.for(
     'DrinkCosmosDbSqlToDrinkConverter',
   ),
@@ -46,16 +58,10 @@ export const drinksInjectionSymbolsMap = {
   findOneDrinkUseCase: Symbol.for('FindOneDrinkUseCase'),
   findOneLiquidAdapter: Symbol.for('FindOneLiquidAdapter'),
   findOneLiquidUseCase: Symbol.for('FindOneLiquidUseCase'),
-  getDrinkApiV1HttpRequestController: Symbol.for(
-    'GetDrinkApiV1HttpRequestController',
-  ),
   getDrinkApiV1HttpRequestProcessor: Symbol.for(
     'GetDrinkApiV1HttpRequestProcessor',
   ),
   getDrinkApiV1RequestController: Symbol.for('GetDrinkApiV1RequestController'),
-  getLiquidApiV1HttpRequestController: Symbol.for(
-    'GetLiquidApiV1HttpRequestController',
-  ),
   getLiquidApiV1HttpRequestProcessor: Symbol.for(
     'GetLiquidApiV1HttpRequestProcessor',
   ),
@@ -97,17 +103,11 @@ export const drinksInjectionSymbolsMap = {
     'liquidKindToLiquidKindCosmosDbSqlConverter',
   ),
   liquidToLiquidApiV1Converter: Symbol.for('LiquidToLiquidApiV1Converter'),
-  postDrinkApiV1HttpRequestController: Symbol.for(
-    'PostDrinkApiV1HttpRequestController',
-  ),
   postDrinkApiV1HttpRequestProcessor: Symbol.for(
     'PostDrinkApiV1HttpRequestProcessor',
   ),
   postDrinkApiV1RequestController: Symbol.for(
     'PostDrinkApiV1RequestController',
-  ),
-  postLiquidApiV1HttpRequestController: Symbol.for(
-    'PostLiquidApiV1HttpRequestController',
   ),
   postLiquidApiV1HttpRequestProcessor: Symbol.for(
     'PostLiquidApiV1HttpRequestProcessor',

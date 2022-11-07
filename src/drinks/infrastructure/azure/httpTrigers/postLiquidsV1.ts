@@ -15,7 +15,7 @@ async function run(context: Context): Promise<HttpResponse> {
     HttpRequest,
     HttpResponse
   > = nestJsApplicationContext.get(
-    drinksInjectionSymbolsMap.postLiquidApiV1HttpRequestController,
+    drinksInjectionSymbolsMap.azurePostLiquidApiV1HttpRequestController,
   );
 
   const httpResponse: HttpResponse =
