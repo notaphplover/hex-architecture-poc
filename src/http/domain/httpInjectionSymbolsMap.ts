@@ -6,13 +6,13 @@ export const httpInjectionSymbolsMap = {
   azureHttpRequestToRequestWithBodyConverter: Symbol.for(
     'AzureHttpRequestToRequestWithBodyConverter',
   ),
-  getHttpResponseCreateQueryToResponseConverter: Symbol.for(
-    'GetHttpResponseCreateQueryToResponseConverter',
-  ),
   httpResponseCreateQueryToGetResponseWithEntityCreatedConverter: Symbol.for(
     'HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter',
   ),
   httpResponseCreateQueryToPostResponseWithEntityCreatedConverter: Symbol.for(
     'HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter',
+  ),
+  singleEntityHttpGetResponseCreateQueryToResponseConverter: Symbol.for(
+    'SingleEntityHttpGetResponseCreateQueryToResponseConverter',
   ),
 };

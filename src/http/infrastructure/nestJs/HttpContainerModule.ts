@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { GetHttpResponseCreateQueryToResponseConverter } from '../../application/converters/GetHttpResponseCreateQueryToResponseConverter';
+import { SingleEntityHttpGetResponseCreateQueryToResponseConverter } from '../../application/converters/SingleEntityHttpGetResponseCreateQueryToResponseConverter';
 import { httpInjectionSymbolsMap } from '../../domain/httpInjectionSymbolsMap';
 import { AzureHttpRequestToRequestConverter } from '../azure/converters/AzureHttpRequestToRequestConverter';
 import { AzureHttpRequestToRequestWithBodyConverter } from '../azure/converters/AzureHttpRequestToRequestWithBodyConverter';
@@ -11,7 +11,7 @@ import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from 
   exports: [
     httpInjectionSymbolsMap.azureHttpRequestToRequestConverter,
     httpInjectionSymbolsMap.azureHttpRequestToRequestWithBodyConverter,
-    httpInjectionSymbolsMap.getHttpResponseCreateQueryToResponseConverter,
+    httpInjectionSymbolsMap.singleEntityHttpGetResponseCreateQueryToResponseConverter,
     httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
     httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
   ],
@@ -27,11 +27,6 @@ import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from 
     },
     {
       provide:
-        httpInjectionSymbolsMap.getHttpResponseCreateQueryToResponseConverter,
-      useClass: GetHttpResponseCreateQueryToResponseConverter,
-    },
-    {
-      provide:
         httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
       useClass: HttpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
     },
@@ -39,6 +34,11 @@ import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from 
       provide:
         httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
       useClass: HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
+    },
+    {
+      provide:
+        httpInjectionSymbolsMap.singleEntityHttpGetResponseCreateQueryToResponseConverter,
+      useClass: SingleEntityHttpGetResponseCreateQueryToResponseConverter,
     },
   ],
 })

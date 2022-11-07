@@ -8,7 +8,7 @@ import { ResponseWithBody } from '../models/ResponseWithBody';
 import { HttpSingleEntityResponseCreateQuery } from '../query/HttpSingleEntityResponseCreateQuery';
 
 @Injectable()
-export class GetHttpResponseCreateQueryToResponseConverter
+export class SingleEntityHttpGetResponseCreateQueryToResponseConverter
   implements
     Converter<
       HttpSingleEntityResponseCreateQuery<unknown, unknown, unknown>,
