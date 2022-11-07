@@ -13,6 +13,7 @@ import { ResponseToAzureHttpResponseConverter } from '../azure/converters/Respon
   exports: [
     httpInjectionSymbolsMap.azureHttpRequestToRequestConverter,
     httpInjectionSymbolsMap.azureHttpRequestToRequestWithBodyConverter,
+    httpInjectionSymbolsMap.responseToAzureHttpResponseConverter,
     httpInjectionSymbolsMap.singleEntityHttpGetResponseCreateQueryToResponseConverter,
     httpInjectionSymbolsMap.httpResponseCreateQueryToGetResponseWithEntityCreatedConverter,
     httpInjectionSymbolsMap.httpResponseCreateQueryToPostResponseWithEntityCreatedConverter,
