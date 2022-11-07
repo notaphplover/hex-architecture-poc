@@ -32,7 +32,7 @@ export class GetLiquidApiV1RequestController extends HttpSingleEntityRequestCont
       LiquidFindQuery
     >,
     @Inject(drinksInjectionSymbolsMap.findOneLiquidUseCase)
-    insertOneLiquidUseCase: UseCase<LiquidFindQuery, Liquid>,
+    findOneLiquidUseCase: UseCase<LiquidFindQuery, Liquid | undefined>,
     @Inject(drinksInjectionSymbolsMap.liquidToLiquidApiV1Converter)
     liquidToLiquidApiV1Converter: Converter<Liquid, LiquidApiV1>,
     @Inject(
@@ -50,7 +50,7 @@ export class GetLiquidApiV1RequestController extends HttpSingleEntityRequestCont
     super(
       errorToResponseConverter,
       getLiquidApiV1HttpRequestProcessor,
-      insertOneLiquidUseCase,
+      findOneLiquidUseCase,
       liquidToLiquidApiV1Converter,
       singleEntityHttpGetResponseCreateQueryToResponseConverter,
     );

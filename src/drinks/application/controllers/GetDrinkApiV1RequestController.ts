@@ -32,7 +32,7 @@ export class GetDrinkApiV1RequestController extends HttpSingleEntityRequestContr
       DrinkFindQuery
     >,
     @Inject(drinksInjectionSymbolsMap.findOneDrinkUseCase)
-    insertOneDrinkUseCase: UseCase<DrinkFindQuery, Drink>,
+    findOneDrinkUseCase: UseCase<DrinkFindQuery, Drink | undefined>,
     @Inject(drinksInjectionSymbolsMap.drinkToDrinkApiV1Converter)
     drinkToDrinkApiV1Converter: Converter<Drink, DrinkApiV1>,
     @Inject(
@@ -50,7 +50,7 @@ export class GetDrinkApiV1RequestController extends HttpSingleEntityRequestContr
     super(
       errorToResponseConverter,
       getDrinkApiV1HttpRequestProcessor,
-      insertOneDrinkUseCase,
+      findOneDrinkUseCase,
       drinkToDrinkApiV1Converter,
       singleEntityHttpGetResponseCreateQueryToResponseConverter,
     );
