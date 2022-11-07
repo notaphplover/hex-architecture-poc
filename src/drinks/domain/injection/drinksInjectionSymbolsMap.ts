@@ -52,6 +52,7 @@ export const drinksInjectionSymbolsMap = {
   getDrinkApiV1HttpRequestProcessor: Symbol.for(
     'GetDrinkApiV1HttpRequestProcessor',
   ),
+  getDrinkApiV1RequestController: Symbol.for('GetDrinkApiV1RequestController'),
   getLiquidApiV1HttpRequestController: Symbol.for(
     'GetLiquidApiV1HttpRequestController',
   ),
