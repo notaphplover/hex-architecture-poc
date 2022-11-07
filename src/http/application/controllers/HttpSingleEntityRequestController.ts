@@ -1,5 +1,4 @@
 import { Controller } from '../../../common/application/modules/Controller';
-import { Port } from '../../../common/application/modules/Port';
 import { UseCase } from '../../../common/application/modules/UseCase';
 import { Converter } from '../../../common/domain/modules/Converter';
 import { Request } from '../models/Request';
@@ -16,9 +15,9 @@ export class HttpSingleEntityRequestController<
   TModelApi,
 > implements Controller<TRequest, Response | ResponseWithBody<unknown>>
 {
-  readonly #handleErrorPort: Port<
+  readonly #errorToResponseConverter: Converter<
     unknown,
-    Response | ResponseWithBody<unknown>
+    ResponseWithBody<unknown>
   >;
   readonly #requestProcessor: RequestProcessor<TRequest, TParams>;
   readonly #applicationUseCase: UseCase<TParams, TModel | undefined>;
@@ -29,7 +28,7 @@ export class HttpSingleEntityRequestController<
   >;
 
   constructor(
-    handleErrorPort: Port<unknown, Response | ResponseWithBody<unknown>>,
+    errorToResponseConverter: Converter<unknown, ResponseWithBody<unknown>>,
     requestProcessor: RequestProcessor<TRequest, TParams>,
     applicationUseCase: UseCase<TParams, TModel | undefined>,
     modelToModelApiConverter: Converter<TModel, TModelApi>,
@@ -38,7 +37,7 @@ export class HttpSingleEntityRequestController<
       Response | ResponseWithBody<TModelApi>
     >,
   ) {
-    this.#handleErrorPort = handleErrorPort;
+    this.#errorToResponseConverter = errorToResponseConverter;
     this.#requestProcessor = requestProcessor;
     this.#applicationUseCase = applicationUseCase;
     this.#modelToModelApiConverter = modelToModelApiConverter;
@@ -84,7 +83,7 @@ export class HttpSingleEntityRequestController<
 
       return httpResponse;
     } catch (error: unknown) {
-      return this.#handleErrorPort.adapt(error);
+      return this.#errorToResponseConverter.convert(error);
     }
   }
 }

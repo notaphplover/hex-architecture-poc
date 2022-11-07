@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Port } from '../../../common/application/modules/Port';
 import { UseCase } from '../../../common/application/modules/UseCase';
 import { Converter } from '../../../common/domain/modules/Converter';
 import { errorInjectionSymbolsMap } from '../../../errors/domain/errorInjectionSymbolsMap';
@@ -25,8 +24,8 @@ export class GetDrinkApiV1RequestController extends HttpSingleEntityRequestContr
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @Inject(errorInjectionSymbolsMap.handleErrorPort)
-    handleErrorPort: Port<unknown, ResponseWithBody<unknown>>,
+    @Inject(errorInjectionSymbolsMap.errorToResponseConverter)
+    errorToResponseConverter: Converter<unknown, ResponseWithBody<unknown>>,
     @Inject(drinksInjectionSymbolsMap.getDrinkApiV1HttpRequestProcessor)
     getDrinkApiV1HttpRequestProcessor: RequestProcessor<
       Request,
@@ -49,7 +48,7 @@ export class GetDrinkApiV1RequestController extends HttpSingleEntityRequestContr
     >,
   ) {
     super(
-      handleErrorPort,
+      errorToResponseConverter,
       getDrinkApiV1HttpRequestProcessor,
       insertOneDrinkUseCase,
       drinkToDrinkApiV1Converter,
