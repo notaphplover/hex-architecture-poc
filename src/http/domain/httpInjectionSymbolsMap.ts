@@ -15,4 +15,7 @@ export const httpInjectionSymbolsMap = {
   singleEntityHttpGetResponseCreateQueryToResponseConverter: Symbol.for(
     'SingleEntityHttpGetResponseCreateQueryToResponseConverter',
   ),
+  singleEntityHttpPostResponseCreateQueryToResponseConverter: Symbol.for(
+    'SingleEntityHttpPostResponseCreateQueryToResponseConverter',
+  ),
 };

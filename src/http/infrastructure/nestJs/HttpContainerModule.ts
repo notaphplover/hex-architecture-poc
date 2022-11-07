@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { SingleEntityHttpGetResponseCreateQueryToResponseConverter } from '../../application/converters/SingleEntityHttpGetResponseCreateQueryToResponseConverter';
+import { SingleEntityHttpPostResponseCreateQueryToResponseConverter } from '../../application/converters/SingleEntityHttpPostResponseCreateQueryToResponseConverter';
 import { httpInjectionSymbolsMap } from '../../domain/httpInjectionSymbolsMap';
 import { AzureHttpRequestToRequestConverter } from '../azure/converters/AzureHttpRequestToRequestConverter';
 import { AzureHttpRequestToRequestWithBodyConverter } from '../azure/converters/AzureHttpRequestToRequestWithBodyConverter';
@@ -39,6 +40,11 @@ import { HttpResponseCreateQueryToPostResponseWithEntityCreatedConverter } from 
       provide:
         httpInjectionSymbolsMap.singleEntityHttpGetResponseCreateQueryToResponseConverter,
       useClass: SingleEntityHttpGetResponseCreateQueryToResponseConverter,
+    },
+    {
+      provide:
+        httpInjectionSymbolsMap.singleEntityHttpPostResponseCreateQueryToResponseConverter,
+      useClass: SingleEntityHttpPostResponseCreateQueryToResponseConverter,
     },
   ],
 })
