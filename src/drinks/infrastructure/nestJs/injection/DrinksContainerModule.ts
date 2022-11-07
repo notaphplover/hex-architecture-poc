@@ -18,6 +18,10 @@ import { LiquidInsertQueryApiV1ToLiquidInsertQueryConverter } from '../../../app
 import { LiquidKindApiV1ToLiquidKindConverter } from '../../../application/converters/api/v1/LiquidKindApiV1ToLiquidKindConverter';
 import { LiquidKindToLiquidKindApiV1Converter } from '../../../application/converters/api/v1/LiquidKindToLiquidKindApiV1Converter';
 import { LiquidToLiquidApiV1Converter } from '../../../application/converters/api/v1/LiquidToLiquidApiV1Converter';
+import { GetDrinkApiV1HttpRequestProcessor } from '../../../application/requestProcessors/GetDrinkApiV1HttpRequestProcessor';
+import { GetLiquidApiV1HttpRequestProcessor } from '../../../application/requestProcessors/GetLiquidApiV1HttpRequestProcessor';
+import { PostDrinkApiV1HttpRequestProcessor } from '../../../application/requestProcessors/PostDrinkApiV1HttpRequestProcessor';
+import { PostLiquidApiV1HttpRequestProcessor } from '../../../application/requestProcessors/PostLiquidApiV1HttpRequestProcessor';
 import { FindOneDrinkUseCase } from '../../../application/useCases/FindOneDrinkUseCase';
 import { FindOneLiquidUseCase } from '../../../application/useCases/FindOneLiquidUseCase';
 import { InsertOneDrinkUseCase } from '../../../application/useCases/InsertOneDrinkUseCase';
@@ -28,10 +32,6 @@ import { AzureGetDrinkApiV1HttpRequestController } from '../../azure/controllers
 import { AzureGetLiquidApiV1HttpRequestController } from '../../azure/controllers/AzureGetLiquidApiV1HttpRequestController';
 import { AzurePostDrinkApiV1HttpRequestController } from '../../azure/controllers/AzurePostDrinkApiV1HttpRequestController';
 import { AzurePostLiquidApiV1HttpRequestController } from '../../azure/controllers/AzurePostLiquidApiV1HttpRequestController';
-import { GetDrinkApiV1HttpRequestProcessor } from '../../azure/requestProcessors/GetDrinkApiV1HttpRequestProcessor';
-import { GetLiquidApiV1HttpRequestProcessor } from '../../azure/requestProcessors/GetLiquidApiV1HttpRequestProcessor';
-import { PostDrinkApiV1HttpRequestProcessor } from '../../azure/requestProcessors/PostDrinkApiV1HttpRequestProcessor';
-import { PostLiquidApiV1HttpRequestProcessor } from '../../azure/requestProcessors/PostLiquidApiV1HttpRequestProcessor';
 import { FindLiquidsCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/FindLiquidsCosmosDbSqlAdapter';
 import { FindOneDrinkCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/FindOneDrinkCosmosDbSqlAdapter';
 import { FindOneLiquidCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/FindOneLiquidCosmosDbSqlAdapter';

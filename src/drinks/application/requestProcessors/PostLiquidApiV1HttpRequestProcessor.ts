@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Converter } from '../../../../common/domain/modules/Converter';
-import { AppError } from '../../../../errors/application/models/AppError';
-import { AppErrorKind } from '../../../../errors/application/models/AppErrorKind';
-import { RequestWithBody } from '../../../../http/application/models/RequestWithBody';
-import { RequestProcessor } from '../../../../http/application/modules/RequestProcessor';
-import { LiquidKindApiV1 } from '../../../application/models/api/v1/LiquidKindApiV1';
-import { LiquidInsertQueryApiV1 } from '../../../application/queries/api/v1/LiquidInsertQueryApiV1';
-import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuery';
-import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
+import { Converter } from '../../../common/domain/modules/Converter';
+import { AppError } from '../../../errors/application/models/AppError';
+import { AppErrorKind } from '../../../errors/application/models/AppErrorKind';
+import { RequestWithBody } from '../../../http/application/models/RequestWithBody';
+import { RequestProcessor } from '../../../http/application/modules/RequestProcessor';
+import { LiquidKindApiV1 } from '../../application/models/api/v1/LiquidKindApiV1';
+import { LiquidInsertQueryApiV1 } from '../../application/queries/api/v1/LiquidInsertQueryApiV1';
+import { LiquidInsertQuery } from '../../application/queries/LiquidInsertQuery';
+import { drinksInjectionSymbolsMap } from '../../domain/injection/drinksInjectionSymbolsMap';
 
 @Injectable()
 export class PostLiquidApiV1HttpRequestProcessor
