@@ -11,29 +11,31 @@ import { HttpSingleEntityResponseCreateQuery } from '../query/HttpSingleEntityRe
 
 export class HttpSingleEntityRequestController<
   TRequest extends Request | RequestWithBody,
-  TResponse extends Response | ResponseWithBody<TModelApi>,
   TParams,
   TModel,
   TModelApi,
-> implements Controller<TRequest, TResponse>
+> implements Controller<TRequest, Response | ResponseWithBody<unknown>>
 {
-  readonly #handleErrorPort: Port<unknown, TResponse>;
+  readonly #handleErrorPort: Port<
+    unknown,
+    Response | ResponseWithBody<unknown>
+  >;
   readonly #requestProcessor: RequestProcessor<TRequest, TParams>;
   readonly #applicationUseCase: UseCase<TParams, TModel | undefined>;
   readonly #modelToModelApiConverter: Converter<TModel, TModelApi>;
   readonly #httpResponseCreateQueryToResponseConverter: Converter<
     HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
-    TResponse
+    Response | ResponseWithBody<TModelApi>
   >;
 
   constructor(
-    handleErrorPort: Port<unknown, TResponse>,
+    handleErrorPort: Port<unknown, Response | ResponseWithBody<unknown>>,
     requestProcessor: RequestProcessor<TRequest, TParams>,
     applicationUseCase: UseCase<TParams, TModel | undefined>,
     modelToModelApiConverter: Converter<TModel, TModelApi>,
     httpResponseCreateQueryToResponseConverter: Converter<
       HttpSingleEntityResponseCreateQuery<TParams, TModel, TModelApi>,
-      TResponse
+      Response | ResponseWithBody<TModelApi>
     >,
   ) {
     this.#handleErrorPort = handleErrorPort;
@@ -44,7 +46,9 @@ export class HttpSingleEntityRequestController<
       httpResponseCreateQueryToResponseConverter;
   }
 
-  public async handle(httpRequest: TRequest): Promise<TResponse> {
+  public async handle(
+    httpRequest: TRequest,
+  ): Promise<Response | ResponseWithBody<unknown>> {
     try {
       const params: TParams = await this.#requestProcessor.process(httpRequest);
       const modelOrUndefined: TModel | undefined =
@@ -73,7 +77,7 @@ export class HttpSingleEntityRequestController<
         };
       }
 
-      const httpResponse: TResponse =
+      const httpResponse: Response | ResponseWithBody<TModelApi> =
         this.#httpResponseCreateQueryToResponseConverter.convert(
           httpResponseCreateQuery,
         );
