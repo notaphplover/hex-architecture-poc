@@ -27,7 +27,7 @@ export class PostLiquidApiV1RequestController extends HttpSingleEntityRequestCon
     @Inject(errorInjectionSymbolsMap.errorToResponseConverter)
     errorToResponseConverter: Converter<unknown, ResponseWithBody<unknown>>,
     @Inject(drinksInjectionSymbolsMap.postLiquidApiV1HttpRequestProcessor)
-    getLiquidApiV1HttpRequestProcessor: RequestProcessor<
+    postLiquidApiV1HttpRequestProcessor: RequestProcessor<
       Request,
       LiquidInsertQuery
     >,
@@ -49,7 +49,7 @@ export class PostLiquidApiV1RequestController extends HttpSingleEntityRequestCon
   ) {
     super(
       errorToResponseConverter,
-      getLiquidApiV1HttpRequestProcessor,
+      postLiquidApiV1HttpRequestProcessor,
       insertOneLiquidUseCase,
       liquidToLiquidApiV1Converter,
       singleEntityHttpPostResponseCreateQueryToResponseConverter,
