@@ -14,7 +14,7 @@ export class DrinkCreationRuleValidator
       case DrinkKind.alcoholic:
         return this.#hasAlcoholLiquids(liquids);
       case DrinkKind.soda:
-        return this.#hasAlcoholLiquids(liquids);
+        return !this.#hasAlcoholLiquids(liquids);
     }
   }
 
