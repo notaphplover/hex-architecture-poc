@@ -2,14 +2,14 @@ import { Controller } from '../../../common/application/modules/Controller';
 import { Port } from '../../../common/application/modules/Port';
 import { UseCase } from '../../../common/application/modules/UseCase';
 import { Converter } from '../../../common/domain/modules/Converter';
-import { Request } from '../../application/models/Request';
-import { RequestWithBody } from '../../application/models/RequestWithBody';
-import { RequestProcessor } from '../../application/modules/RequestProcessor';
-import { HttpSingleEntityResponseCreateQuery } from '../../application/query/HttpSingleEntityResponseCreateQuery';
+import { Request } from '../models/Request';
+import { RequestWithBody } from '../models/RequestWithBody';
 import { Response } from '../models/Response';
 import { ResponseWithBody } from '../models/ResponseWithBody';
+import { RequestProcessor } from '../modules/RequestProcessor';
+import { HttpSingleEntityResponseCreateQuery } from '../query/HttpSingleEntityResponseCreateQuery';
 
-export class AzureHttpSingleEntityRequestController<
+export class HttpSingleEntityRequestController<
   TRequest extends Request | RequestWithBody,
   TResponse extends Response | ResponseWithBody<TModelApi>,
   TParams,
