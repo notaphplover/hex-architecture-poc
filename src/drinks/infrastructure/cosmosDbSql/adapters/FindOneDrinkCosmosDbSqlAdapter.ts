@@ -1,4 +1,4 @@
-import { Container, SqlQuerySpec } from '@azure/cosmos';
+import { Container, FeedOptions, SqlQuerySpec } from '@azure/cosmos';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { Converter } from '../../../../common/domain/modules/Converter';
@@ -41,6 +41,13 @@ export class FindOneDrinkCosmosDbSqlAdapter extends FindOneEntityCosmosDbSqlAdap
       FindOneQuery<DrinkCosmosDbSql>
     >,
     @Inject(
+      drinksInjectionSymbolsMap.drinkFindQueryToCosmosDbSqlFeedOptionsConverter,
+    )
+    drinkFindQueryToCosmosDbSqlFeedOptionsConverter: Converter<
+      DrinkFindQuery,
+      FeedOptions
+    >,
+    @Inject(
       dbInjectionSymbolsMap.cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter,
     )
     cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter: Converter<
@@ -52,7 +59,7 @@ export class FindOneDrinkCosmosDbSqlAdapter extends FindOneEntityCosmosDbSqlAdap
       container,
       drinkCosmosDbSqlToDrinkConverters,
       drinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter,
-      undefined,
+      drinkFindQueryToCosmosDbSqlFeedOptionsConverter,
       cosmosDbSqlFindOneQueryToCosmosDbSqlQuerySpecConverter,
     );
   }
