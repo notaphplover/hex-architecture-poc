@@ -30,13 +30,13 @@ The current architecture is proposed for a solution providing a REST API, so the
 
 Eric Evans proposes four layers for DDD based architectures:
 
-![DDD layers](./static/ddd-layers.png)
+![DDD layers](../static/ddd-layers.png)
 
 For simplicity purposes, we will get rid of the presentation layer.
 
 The remaining layers would be the following ones:
 
-![proposed layers](./static/project-layers.png)
+![proposed layers](../static/project-layers.png)
 
 Keep in mind outer layers are aware of inner layers, but the opposite is not true. The application layer can perfectly use a domain model but it won't use an infrastructure service whatsoever.
 
