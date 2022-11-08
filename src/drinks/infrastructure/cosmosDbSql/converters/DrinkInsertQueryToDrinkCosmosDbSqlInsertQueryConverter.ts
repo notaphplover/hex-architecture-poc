@@ -7,10 +7,11 @@ import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjec
 import { DrinkItem } from '../../../domain/models/DrinkItem';
 import { DrinkKind } from '../../../domain/models/DrinkKind';
 import { DrinkCosmosDbSql } from '../models/DrinkCosmosDbSql';
+import { DrinkCosmosDbSqlPartitionKey } from '../models/DrinkCosmosDbSqlPartitionKey';
 import { DrinkItemCosmosDbSql } from '../models/DrinkItemCosmosDbSql';
 import { DrinkKindCosmosDbSql } from '../models/DrinkKindCosmosDbSql';
 
-const PARTITION_KEY: string = 'partition-key';
+const PARTITION_KEY: DrinkCosmosDbSqlPartitionKey = 'partition-key';
 
 export class DrinkInsertQueryToDrinkCosmosDbSqlInsertQueryConverter
   implements Converter<DrinkInsertQuery, InsertQuery<DrinkCosmosDbSql>>

@@ -6,9 +6,10 @@ import { LiquidInsertQuery } from '../../../application/queries/LiquidInsertQuer
 import { drinksInjectionSymbolsMap } from '../../../domain/injection/drinksInjectionSymbolsMap';
 import { LiquidKind } from '../../../domain/models/LiquidKind';
 import { LiquidCosmosDbSql } from '../models/LiquidCosmosDbSql';
+import { LiquidCosmosDbSqlPartitionKey } from '../models/LiquidCosmosDbSqlPartitionKey';
 import { LiquidKindCosmosDbSql } from '../models/LiquidKindCosmosDbSql';
 
-const PARTITION_KEY: string = 'partition-key';
+const PARTITION_KEY: LiquidCosmosDbSqlPartitionKey = 'partition-key';
 
 @Injectable()
 export class LiquidInsertQueryToLiquidCosmosDbSqlInsertQueryConverter
