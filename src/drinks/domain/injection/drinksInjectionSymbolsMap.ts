@@ -19,6 +19,9 @@ export const drinksInjectionSymbolsMap = {
   drinkFindQueryApiV1ToDrinkFindQueryConverter: Symbol.for(
     'DrinkFindQueryApiV1ToDrinkFindQueryConverter',
   ),
+  drinkFindQueryToCosmosDbSqlFeedOptionsConverter: Symbol.for(
+    'DrinkFindQueryToCosmosDbSqlFeedOptionsConverter',
+  ),
   drinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter: Symbol.for(
     'DrinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter',
   ),

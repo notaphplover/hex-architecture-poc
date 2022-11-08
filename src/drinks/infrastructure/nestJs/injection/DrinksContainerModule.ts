@@ -42,6 +42,7 @@ import { FindOneLiquidCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/Find
 import { InsertOneDrinkCosmosDbSqlAdapter } from '../../cosmosDbSql/adapters/InsertOneDrinkCosmosDbSqlAdapter';
 import { InsertOneLiquidCosmosDbAdapter } from '../../cosmosDbSql/adapters/InsertOneLiquidCosmosDbSqlAdapter';
 import { DrinkCosmosSqlDbToDrinkConverter } from '../../cosmosDbSql/converters/DrinkCosmosDbSqlToDrinkConverter';
+import { DrinkFindQueryToCosmosDbSqlFeedOptionsConverter } from '../../cosmosDbSql/converters/DrinkFindQueryToCosmosDbSqlFeedOptionsConverter';
 import { DrinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter } from '../../cosmosDbSql/converters/DrinkFindQueryToDrinkCosmosDbSqlFindOneQueryConverter';
 import { DrinkInsertQueryToDrinkCosmosDbSqlInsertQueryConverter } from '../../cosmosDbSql/converters/DrinkInsertQueryToDrinkCosmosDbSqlInsertQueryConverter';
 import { DrinkItemCosmosDbSqlToDrinkItemConverter } from '../../cosmosDbSql/converters/DrinkItemCosmosDbSqlToDrinkItemConverter';
@@ -105,6 +106,11 @@ import { LiquidKindToLiquidKindCosmosDbSqlConverter } from '../../cosmosDbSql/co
       provide:
         drinksInjectionSymbolsMap.drinkFindQueryApiV1ToDrinkFindQueryConverter,
       useClass: DrinkFindQueryApiV1ToDrinkFindQueryConverter,
+    },
+    {
+      provide:
+        drinksInjectionSymbolsMap.drinkFindQueryToCosmosDbSqlFeedOptionsConverter,
+      useClass: DrinkFindQueryToCosmosDbSqlFeedOptionsConverter,
     },
     {
       provide:
