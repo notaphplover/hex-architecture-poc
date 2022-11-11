@@ -45,3 +45,9 @@ Keep in mind outer layers are aware of inner layers, but the opposite is not tru
 - **Application**: Application agnostic logic and models are included here. No business logic can ever be included here. The same applies to any specific service / library coupled module. This layer knows a persistence service exists and even knows a contract to request it to search for an entity, but it will never know if a CosmosDb SQL driver is accesing a CosmosDb database or maybe a third party REST API is used for the same purpose instead.
 
 - **Infrastructure**: Application service / library specific logic and models are included here. Modules of this layer often implements contract established in inner layers.
+
+Consider having a look to the different patterns involved in the project:
+
+- [Custom patterns](./patterns/custom-patterns.md).
+- [DDD patterns](./patterns/ddd/domain.md).
+- [Hexagonal architecture patterns](./patterns/hex.md)
